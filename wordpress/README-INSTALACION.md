@@ -33,6 +33,17 @@ por separado.
 - Archivos protegidos de acceso público.
 - Retiro coordinado o envío por transporte con RUT, dirección, región y ciudad.
 - Consentimiento para promociones guardado en el pedido.
+- Página Productos conectada al catálogo de WooCommerce.
+- Estados y correos: Pedido recibido, confirmado, listo y enviado.
+
+## Actualizaciones habituales
+
+- Productos: **WordPress → Productos**.
+- Logo: **Apariencia → Personalizar → Identidad del sitio**.
+- Correos: **WooCommerce → Ajustes → Correos electrónicos**.
+- Estado de un pedido: **WooCommerce → Pedidos**, abre el pedido y cambia su estado.
+- Instagram automático: instala y conecta `Smash Balloon Social Photo Feed`; la
+  conexión con Instagram debe autorizarla el propietario de la cuenta.
 
 ## Administración
 
