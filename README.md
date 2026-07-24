@@ -17,6 +17,10 @@ Esta versión contiene:
 - Opción de retiro coordinado o envío por transporte.
 - Campos condicionales de RUT, dirección, región y ciudad.
 - Resumen de compra, forma de pago Flow y botón de pago.
+- Página Productos conectada al catálogo de WooCommerce.
+- Logo reemplazable desde el Personalizador de WordPress.
+- Consentimiento de promociones marcado inicialmente y deseleccionable.
+- Estados y correos automáticos: recibido, confirmado, listo y enviado.
 - Formulario de contacto, Instagram y panel privado de administración.
 
 ## Arquitectura prevista para producción
@@ -65,7 +69,8 @@ npm run build
 
 No se incluye el plugin personalizado de Flow/WooCommerce porque ya fue instalado por separado. Tampoco se incluye el plugin completo de WooCommerce.
 
-Antes de publicar en Hosty, este frontend debe trasladarse a un tema o plantilla compatible con WordPress/WooCommerce. El código actual está preparado para conservar la referencia completa del diseño y sus interacciones mientras se realiza esa adaptación.
+La adaptación para WordPress/WooCommerce ya está disponible en la carpeta
+`wordpress/` y es la versión utilizada en `odcpublicidad.cl`.
 
 ## Versión WordPress
 
