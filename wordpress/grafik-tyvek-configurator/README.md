@@ -15,6 +15,9 @@ de Flow.
 - Diseños separados en carrito y pedido.
 - Archivos protegidos y descargables únicamente desde el pedido administrativo.
 - Retiro coordinado o envío por transporte con RUT, dirección, región y ciudad.
+- Consentimiento de promociones marcado inicialmente y deseleccionable.
+- Estados de producción: Pedido recibido, confirmado, listo y enviado.
+- Correos automáticos editables desde los ajustes de WooCommerce.
 - Pantalla editable en **Grafik → Configurador Tyvek**.
 
 ## Seguridad
