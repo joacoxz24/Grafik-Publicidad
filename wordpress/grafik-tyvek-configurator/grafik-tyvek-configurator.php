@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador Tyvek
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Configurador seguro de pulseras Tyvek para WooCommerce, con archivos por diseño, descuento y datos de despacho.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.0.0' );
+define( 'GRAFIK_TYVEK_VERSION', '1.0.2' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
@@ -670,6 +670,7 @@ final class Grafik_Tyvek_Configurator {
 				</label>
 			</div>
 			<div class="grafik-shipping-extra" hidden>
+				<p class="grafik-shipping-required-note">Todos estos datos son obligatorios cuando eliges envío por transporte.</p>
 				<?php
 				woocommerce_form_field(
 					'grafik_shipping_rut',
