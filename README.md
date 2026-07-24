@@ -66,3 +66,14 @@ npm run build
 No se incluye el plugin personalizado de Flow/WooCommerce porque ya fue instalado por separado. Tampoco se incluye el plugin completo de WooCommerce.
 
 Antes de publicar en Hosty, este frontend debe trasladarse a un tema o plantilla compatible con WordPress/WooCommerce. El código actual está preparado para conservar la referencia completa del diseño y sus interacciones mientras se realiza esa adaptación.
+
+## Versión WordPress
+
+La carpeta `wordpress/` contiene la adaptación instalable para producción:
+
+- `wordpress/grafik-publicidad`: tema visual de la tienda.
+- `wordpress/grafik-tyvek-configurator`: configurador conectado a WooCommerce.
+- `wordpress/README-INSTALACION.md`: orden de instalación y comprobaciones.
+
+El configurador no contiene ni duplica el plugin de Flow. Los pagos continúan
+siendo responsabilidad de la pasarela activa en WooCommerce.

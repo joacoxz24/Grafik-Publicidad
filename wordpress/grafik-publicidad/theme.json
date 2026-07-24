@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "1220px",
+      "wideSize": "1320px"
+    },
+    "color": {
+      "palette": [
+        { "slug": "grafik-dark", "name": "Grafik oscuro", "color": "#05070d" },
+        { "slug": "grafik-cyan", "name": "Grafik celeste", "color": "#21d4e8" },
+        { "slug": "grafik-pink", "name": "Grafik rosado", "color": "#f02d9b" },
+        { "slug": "white", "name": "Blanco", "color": "#f8fafc" }
+      ]
+    },
+    "typography": {
+      "fluid": true
+    }
+  }
+}
+
