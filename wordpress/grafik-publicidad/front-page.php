@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 $instagram = grafik_instagram_url();
+$instagram_shortcode = trim( (string) get_theme_mod( 'grafik_instagram_shortcode', '' ) );
 $hero      = get_theme_mod( 'grafik_hero_title', 'Pulseras Tyvek personalizadas para tu evento' );
 ?>
 <main>
@@ -90,17 +91,24 @@ $hero      = get_theme_mod( 'grafik_hero_title', 'Pulseras Tyvek personalizadas 
 			</div>
 			<a class="outline" href="<?php echo esc_url( $instagram ); ?>" target="_blank" rel="noopener">Ver perfil en Instagram ↗</a>
 		</div>
-		<div
-			class="insta-grid"
-			style="--grafik-instagram-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/images/instagram-grafik.png' ); ?>')"
-		>
-			<?php for ( $post = 1; $post <= 4; $post++ ) : ?>
-				<a class="insta-post post-<?php echo esc_attr( (string) $post ); ?>" href="<?php echo esc_url( $instagram ); ?>" target="_blank" rel="noopener">
-					<span>Ver en Instagram ↗</span>
-				</a>
-			<?php endfor; ?>
-		</div>
-		<small>Vista actual del perfil. La sincronización automática se puede activar más adelante conectando la cuenta profesional de Meta.</small>
+		<?php if ( $instagram_shortcode && shortcode_exists( 'instagram-feed' ) ) : ?>
+			<div class="grafik-instagram-live">
+				<?php echo do_shortcode( $instagram_shortcode ); ?>
+			</div>
+			<small>Este contenido se actualiza automáticamente desde Instagram.</small>
+		<?php else : ?>
+			<div
+				class="insta-grid"
+				style="--grafik-instagram-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/images/instagram-grafik.png' ); ?>')"
+			>
+				<?php for ( $post = 1; $post <= 4; $post++ ) : ?>
+					<a class="insta-post post-<?php echo esc_attr( (string) $post ); ?>" href="<?php echo esc_url( $instagram ); ?>" target="_blank" rel="noopener">
+						<span>Ver en Instagram ↗</span>
+					</a>
+				<?php endfor; ?>
+			</div>
+			<small>Conecta el plugin de Instagram y pega su shortcode en el Personalizador para activar la actualización automática.</small>
+		<?php endif; ?>
 	</section>
 
 	<section class="shell contact" id="contacto">
