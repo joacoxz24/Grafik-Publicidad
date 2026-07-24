@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.0.0' );
+define( 'GRAFIK_THEME_VERSION', '1.1.0' );
 
 function grafik_theme_setup(): void {
 	load_theme_textdomain( 'grafik-publicidad', get_template_directory() . '/languages' );
@@ -96,6 +96,46 @@ function grafik_theme_activate(): void {
 }
 add_action( 'after_switch_theme', 'grafik_theme_activate' );
 
+/**
+ * Mantiene la página principal del catálogo lista para futuras migraciones.
+ */
+function grafik_theme_upgrade(): void {
+	if ( GRAFIK_THEME_VERSION === get_option( 'grafik_theme_db_version' ) ) {
+		return;
+	}
+
+	if ( function_exists( 'wc_get_page_id' ) ) {
+		$shop_id = wc_get_page_id( 'shop' );
+
+		if ( $shop_id > 0 ) {
+			wp_update_post(
+				array(
+					'ID'         => $shop_id,
+					'post_title' => 'Productos',
+					'post_name'  => 'productos',
+				)
+			);
+		} else {
+			$shop_id = wp_insert_post(
+				array(
+					'post_title'  => 'Productos',
+					'post_name'   => 'productos',
+					'post_type'   => 'page',
+					'post_status' => 'publish',
+				)
+			);
+
+			if ( $shop_id && ! is_wp_error( $shop_id ) ) {
+				update_option( 'woocommerce_shop_page_id', (int) $shop_id );
+			}
+		}
+	}
+
+	update_option( 'grafik_theme_db_version', GRAFIK_THEME_VERSION );
+	flush_rewrite_rules( false );
+}
+add_action( 'init', 'grafik_theme_upgrade', 50 );
+
 function grafik_theme_customize( WP_Customize_Manager $customizer ): void {
 	$customizer->add_section(
 		'grafik_store',
@@ -112,6 +152,12 @@ function grafik_theme_customize( WP_Customize_Manager $customizer ): void {
 			'default'  => 'https://www.instagram.com/grafikpublicidad.cl',
 			'sanitize' => 'esc_url_raw',
 			'type'     => 'url',
+		),
+		'grafik_instagram_shortcode' => array(
+			'label'    => __( 'Shortcode del feed automático de Instagram', 'grafik-publicidad' ),
+			'default'  => '',
+			'sanitize' => 'sanitize_text_field',
+			'type'     => 'text',
 		),
 		'grafik_hero_title'    => array(
 			'label'    => __( 'Título principal', 'grafik-publicidad' ),
@@ -151,6 +197,38 @@ function grafik_instagram_url(): string {
 	return (string) get_theme_mod( 'grafik_instagram_url', 'https://www.instagram.com/grafikpublicidad.cl' );
 }
 
+function grafik_products_url(): string {
+	if ( function_exists( 'wc_get_page_permalink' ) ) {
+		$url = wc_get_page_permalink( 'shop' );
+		if ( $url ) {
+			return $url;
+		}
+	}
+	return home_url( '/productos/' );
+}
+
+/**
+ * Imprime el logo cargado en WordPress o el identificador gráfico predeterminado.
+ */
+function grafik_logo_content(): void {
+	$logo_id = absint( get_theme_mod( 'custom_logo' ) );
+	if ( $logo_id ) {
+		echo wp_get_attachment_image(
+			$logo_id,
+			'full',
+			false,
+			array(
+				'class' => 'grafik-logo-image',
+				'alt'   => get_bloginfo( 'name' ),
+			)
+		);
+		return;
+	}
+	?>
+	<i><span></span></i><span>Grafik <b>Publicidad</b></span>
+	<?php
+}
+
 function grafik_cart_count_fragment( array $fragments ): array {
 	ob_start();
 	?>
@@ -165,6 +243,21 @@ function grafik_order_button_text(): string {
 	return __( 'Pagar de forma segura', 'grafik-publicidad' );
 }
 add_filter( 'woocommerce_order_button_text', 'grafik_order_button_text' );
+
+function grafik_hide_shop_title( bool $show ): bool {
+	return function_exists( 'is_shop' ) && is_shop() ? false : $show;
+}
+add_filter( 'woocommerce_show_page_title', 'grafik_hide_shop_title' );
+
+function grafik_no_products_message(): void {
+	if ( function_exists( 'is_shop' ) && is_shop() ) {
+		echo '<p class="grafik-products-empty">Aquí aparecerán automáticamente los nuevos productos que publiques en WooCommerce.</p>';
+		return;
+	}
+	wc_no_products_found();
+}
+remove_action( 'woocommerce_no_products_found', 'wc_no_products_found', 10 );
+add_action( 'woocommerce_no_products_found', 'grafik_no_products_message', 10 );
 
 function grafik_checkout_intro(): void {
 	if ( is_order_received_page() ) {
@@ -225,4 +318,3 @@ function grafik_contact_submit(): void {
 }
 add_action( 'admin_post_nopriv_grafik_contact', 'grafik_contact_submit' );
 add_action( 'admin_post_grafik_contact', 'grafik_contact_submit' );
-
