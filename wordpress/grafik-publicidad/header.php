@@ -23,18 +23,19 @@ $count    = function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_content
 <?php if ( $checkout ) : ?>
 	<header class="checkout-header">
 		<a class="logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<i><span></span></i><span>Grafik <b>Publicidad</b></span>
+			<?php grafik_logo_content(); ?>
 		</a>
 		<span><?php esc_html_e( 'Pago seguro con Flow', 'grafik-publicidad' ); ?></span>
 	</header>
 <?php else : ?>
 	<header class="header">
 		<a class="logo" href="<?php echo esc_url( home_url( '/#inicio' ) ); ?>">
-			<i><span></span></i><span>Grafik <b>Publicidad</b></span>
+			<?php grafik_logo_content(); ?>
 		</a>
 		<nav aria-label="<?php esc_attr_e( 'Navegación principal', 'grafik-publicidad' ); ?>">
 			<a href="<?php echo esc_url( home_url( '/#inicio' ) ); ?>">Inicio</a>
 			<a href="<?php echo esc_url( home_url( '/#personaliza' ) ); ?>">Pulseras</a>
+			<a href="<?php echo esc_url( grafik_products_url() ); ?>">Productos</a>
 			<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>">Cómo comprar</a>
 			<a href="<?php echo esc_url( home_url( '/#contacto' ) ); ?>">Contacto</a>
 		</nav>
@@ -47,4 +48,3 @@ $count    = function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_content
 		</div>
 	</header>
 <?php endif; ?>
-
