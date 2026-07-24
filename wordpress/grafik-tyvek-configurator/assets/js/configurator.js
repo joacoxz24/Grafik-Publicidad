@@ -155,7 +155,7 @@
 						});
 					});
 				}
-				$(document.body).trigger("added_to_cart", [data.fragments || {}, data.cartHash || "", submit]);
+				$(document.body).trigger("added_to_cart", [data.fragments || {}, data.cartHash || "", $(submit)]);
 				status.className = "grafik-form-status success";
 				status.innerHTML =
 					"<span>" +
@@ -197,4 +197,3 @@
 	});
 	toggleShippingFields();
 })(jQuery);
-
