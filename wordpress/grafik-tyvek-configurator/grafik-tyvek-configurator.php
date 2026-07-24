@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador Tyvek
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Configurador seguro de pulseras Tyvek para WooCommerce, con archivos por diseño, descuento y datos de despacho.
- * Version:           1.0.2
+ * Version:           1.1.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.0.2' );
+define( 'GRAFIK_TYVEK_VERSION', '1.1.0' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
@@ -54,6 +54,7 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	private function __construct() {
+		add_action( 'init', array( $this, 'register_order_statuses' ), 10 );
 		add_action( 'init', array( $this, 'maybe_setup' ), 30 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 		add_shortcode( 'grafik_tyvek_configurator', array( $this, 'shortcode' ) );
@@ -75,6 +76,13 @@ final class Grafik_Tyvek_Configurator {
 		add_action( 'woocommerce_checkout_create_order', array( $this, 'save_delivery_fields' ) );
 		add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'admin_delivery_fields' ) );
 		add_filter( 'woocommerce_email_order_meta_fields', array( $this, 'email_delivery_fields' ), 10, 3 );
+		add_filter( 'wc_order_statuses', array( $this, 'custom_order_statuses' ) );
+		add_filter( 'woocommerce_order_is_paid_statuses', array( $this, 'paid_order_statuses' ) );
+		add_filter( 'woocommerce_email_classes', array( $this, 'order_email_classes' ) );
+		add_action( 'woocommerce_order_status_changed', array( $this, 'send_status_email' ), 10, 4 );
+		add_filter( 'woocommerce_email_subject_customer_processing_order', array( $this, 'received_email_subject' ), 10, 2 );
+		add_filter( 'woocommerce_email_heading_customer_processing_order', array( $this, 'received_email_heading' ), 10, 2 );
+		add_action( 'woocommerce_email_before_order_table', array( $this, 'received_email_message' ), 8, 4 );
 
 		add_action( 'woocommerce_after_order_itemmeta', array( $this, 'admin_file_links' ), 10, 3 );
 		add_action( 'admin_post_grafik_download_design', array( $this, 'download_design' ) );
@@ -109,6 +117,148 @@ final class Grafik_Tyvek_Configurator {
 		$this->ensure_product();
 		$this->prepare_classic_pages();
 		delete_option( self::SETUP_OPTION );
+	}
+
+	public function register_order_statuses(): void {
+		$statuses = array(
+			'wc-grafik-confirmado' => 'Pedido confirmado',
+			'wc-grafik-listo'      => 'Pedido listo',
+			'wc-grafik-enviado'    => 'Pedido enviado',
+		);
+
+		foreach ( $statuses as $status => $label ) {
+			register_post_status(
+				$status,
+				array(
+					'label'                     => $label,
+					'public'                    => true,
+					'exclude_from_search'       => false,
+					'show_in_admin_all_list'    => true,
+					'show_in_admin_status_list' => true,
+					'label_count'               => _n_noop(
+						$label . ' <span class="count">(%s)</span>',
+						$label . ' <span class="count">(%s)</span>',
+						'grafik-tyvek'
+					),
+				)
+			);
+		}
+	}
+
+	/**
+	 * Renombra "Procesando" como "Pedido recibido" y agrega el flujo de producción.
+	 *
+	 * @param array<string,string> $statuses Estados de WooCommerce.
+	 * @return array<string,string>
+	 */
+	public function custom_order_statuses( array $statuses ): array {
+		$updated = array();
+		foreach ( $statuses as $key => $label ) {
+			$updated[ $key ] = 'wc-processing' === $key ? 'Pedido recibido' : $label;
+			if ( 'wc-processing' === $key ) {
+				$updated['wc-grafik-confirmado'] = 'Pedido confirmado';
+				$updated['wc-grafik-listo']      = 'Pedido listo';
+				$updated['wc-grafik-enviado']    = 'Pedido enviado';
+			}
+		}
+		return $updated;
+	}
+
+	/**
+	 * Los estados personalizados corresponden a pedidos que ya fueron pagados.
+	 *
+	 * @param string[] $statuses Estados sin prefijo wc-.
+	 * @return string[]
+	 */
+	public function paid_order_statuses( array $statuses ): array {
+		return array_values(
+			array_unique(
+				array_merge( $statuses, array( 'grafik-confirmado', 'grafik-listo', 'grafik-enviado' ) )
+			)
+		);
+	}
+
+	/**
+	 * Registra correos editables en WooCommerce > Ajustes > Correos electrónicos.
+	 *
+	 * @param array<string,WC_Email> $emails Correos registrados.
+	 * @return array<string,WC_Email>
+	 */
+	public function order_email_classes( array $emails ): array {
+		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-order-status-email.php';
+
+		if ( isset( $emails['WC_Email_Customer_Processing_Order'] ) ) {
+			$emails['WC_Email_Customer_Processing_Order']->title       = 'Pedido recibido';
+			$emails['WC_Email_Customer_Processing_Order']->description = 'Se envía cuando Flow confirma el pago y el pedido queda recibido.';
+		}
+
+		$emails['Grafik_Email_Order_Confirmed'] = new Grafik_Order_Status_Email(
+			'grafik_order_confirmed',
+			'Pedido confirmado',
+			'Se envía cuando Grafik revisa el pedido y confirma que comenzará la producción.',
+			'Pedido confirmado',
+			'Tu pedido ya fue confirmado. Revisamos los antecedentes y comenzaremos la producción de acuerdo con el diseño final acordado.'
+		);
+		$emails['Grafik_Email_Order_Ready'] = new Grafik_Order_Status_Email(
+			'grafik_order_ready',
+			'Pedido listo',
+			'Se envía cuando la producción terminó y el pedido está listo para retiro o despacho.',
+			'Tu pedido está listo',
+			'Tu pedido ya está terminado. Si elegiste retiro, nos comunicaremos contigo para coordinar la entrega. Si elegiste transporte, el siguiente aviso confirmará el despacho.'
+		);
+		$emails['Grafik_Email_Order_Shipped'] = new Grafik_Order_Status_Email(
+			'grafik_order_shipped',
+			'Pedido enviado',
+			'Se envía cuando un pedido con transporte ya fue despachado.',
+			'Tu pedido fue enviado',
+			'Tu pedido ya fue entregado al transporte indicado. Conserva este correo y revisa los datos de despacho incluidos en el pedido.'
+		);
+
+		return $emails;
+	}
+
+	public function send_status_email( int $order_id, string $from, string $to, WC_Order $order ): void {
+		$email_ids = array(
+			'grafik-confirmado' => 'grafik_order_confirmed',
+			'grafik-listo'      => 'grafik_order_ready',
+			'grafik-enviado'    => 'grafik_order_shipped',
+		);
+		if ( ! isset( $email_ids[ $to ] ) ) {
+			return;
+		}
+
+		$emails = WC()->mailer()->get_emails();
+		foreach ( $emails as $email ) {
+			if ( $email instanceof Grafik_Order_Status_Email && $email_ids[ $to ] === $email->id ) {
+				$email->trigger( $order_id, $order );
+				break;
+			}
+		}
+	}
+
+	public function received_email_subject( string $subject, WC_Order $order ): string {
+		return sprintf(
+			'[%s] Pedido #%s recibido',
+			wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
+			$order->get_order_number()
+		);
+	}
+
+	public function received_email_heading( string $heading, WC_Order $order ): string {
+		return 'Recibimos tu pedido';
+	}
+
+	public function received_email_message( WC_Order $order, bool $sent_to_admin, bool $plain_text, WC_Email $email ): void {
+		if ( $sent_to_admin || 'customer_processing_order' !== $email->id ) {
+			return;
+		}
+
+		$message = 'Tu pago fue confirmado y recibimos correctamente tu pedido. Lo revisaremos lo antes posible y te enviaremos una confirmación de cómo quedará el diseño final.';
+		if ( $plain_text ) {
+			echo esc_html( $message ) . "\n\n";
+			return;
+		}
+		echo '<p>' . esc_html( $message ) . '</p>';
 	}
 
 	private function ensure_product(): int {
@@ -696,7 +846,7 @@ final class Grafik_Tyvek_Configurator {
 			</div>
 			<p class="form-row form-row-wide grafik-marketing-consent">
 				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
-					<input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="grafik_marketing_consent" value="1">
+					<input type="checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" name="grafik_marketing_consent" value="1" checked>
 					<span>Quiero recibir promociones y novedades por correo.</span>
 				</label>
 			</p>
