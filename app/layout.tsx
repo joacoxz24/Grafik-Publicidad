@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Grafik Publicidad | Pulseras Tyvek personalizadas",
+  title: "Grafik Publicidad | Pulseras y chapitas personalizadas",
   description:
-    "Pulseras Tyvek personalizadas desde 100 unidades, con carga de diseño y envíos a todo Chile.",
+    "Pulseras Tyvek y chapitas publicitarias de 58 mm: alfiler, llavero y destapador llavero. Personaliza tu pedido con envíos a todo Chile.",
   other: {
     "codex-preview": "development",
   },

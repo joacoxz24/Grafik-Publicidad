@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.1.0' );
+define( 'GRAFIK_THEME_VERSION', '1.2.0' );
 
 function grafik_theme_setup(): void {
 	load_theme_textdomain( 'grafik-publicidad', get_template_directory() . '/languages' );
@@ -66,7 +66,7 @@ function grafik_theme_activate(): void {
 	}
 
 	if ( ! get_option( 'blogdescription' ) ) {
-		update_option( 'blogdescription', 'Pulseras Tyvek personalizadas para eventos' );
+		update_option( 'blogdescription', 'Pulseras y chapitas personalizadas para marcas y eventos' );
 	}
 
 	$front_id = (int) get_option( 'page_on_front' );
@@ -131,6 +131,7 @@ function grafik_theme_upgrade(): void {
 		}
 	}
 
+	grafik_create_catalog_pages();
 	update_option( 'grafik_theme_db_version', GRAFIK_THEME_VERSION );
 	flush_rewrite_rules( false );
 }
@@ -160,8 +161,8 @@ function grafik_theme_customize( WP_Customize_Manager $customizer ): void {
 			'type'     => 'text',
 		),
 		'grafik_hero_title'    => array(
-			'label'    => __( 'Título principal', 'grafik-publicidad' ),
-			'default'  => 'Pulseras Tyvek personalizadas para tu evento',
+			'label'    => __( 'Título de la diapositiva de pulseras', 'grafik-publicidad' ),
+			'default'  => 'Pulseras Tyvek',
 			'sanitize' => 'sanitize_text_field',
 			'type'     => 'text',
 		),
@@ -251,7 +252,7 @@ add_filter( 'woocommerce_show_page_title', 'grafik_hide_shop_title' );
 
 function grafik_no_products_message(): void {
 	if ( function_exists( 'is_shop' ) && is_shop() ) {
-		echo '<p class="grafik-products-empty">Aquí aparecerán automáticamente los nuevos productos que publiques en WooCommerce.</p>';
+		echo '<p class="grafik-products-empty">Elige arriba el producto que quieres personalizar.</p>';
 		return;
 	}
 	wc_no_products_found();
@@ -318,3 +319,23 @@ function grafik_contact_submit(): void {
 }
 add_action( 'admin_post_nopriv_grafik_contact', 'grafik_contact_submit' );
 add_action( 'admin_post_grafik_contact', 'grafik_contact_submit' );
+
+/** Las páginas se resuelven por ID para conservar enlaces al migrar dominio. */
+function grafik_configurator_url( string $family ): string {
+	$page = get_page_by_path( $family );
+	return $page ? get_permalink( $page ) : home_url( '/' . $family . '/' );
+}
+function grafik_create_catalog_pages(): void {
+	foreach ( array( 'pulseras' => 'Pulseras Tyvek', 'chapitas' => 'Chapitas publicitarias' ) as $slug => $title ) {
+		if ( ! get_page_by_path( $slug ) ) {
+			wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_name' => $slug, 'post_title' => $title ) );
+		}
+	}
+}
+function grafik_tyvek_price_label(): string {
+	return '100 unidades · $' . number_format_i18n( (float) get_option( 'grafik_tyvek_price_per_100', 10500 ), 0 );
+}
+function grafik_chapita_price_label(): string {
+	$rule = class_exists( 'Grafik_Chapitas' ) ? Grafik_Chapitas::rule( 'alfiler' ) : array( 'bulk' => 400, 'threshold' => 101 );
+	return 'Desde $' . number_format_i18n( $rule['bulk'], 0 ) . ' c/u · alfiler, ' . $rule['threshold'] . '+ unidades';
+}

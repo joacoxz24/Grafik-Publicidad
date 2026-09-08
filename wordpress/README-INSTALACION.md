@@ -3,10 +3,20 @@
 Este paquete contiene dos instalables:
 
 1. `grafik-publicidad.zip`: tema visual para WordPress y WooCommerce.
-2. `grafik-tyvek-configurator.zip`: configurador de pulseras y datos de entrega.
+2. `grafik-tyvek-configurator.zip`: configurador de pulseras, chapitas y datos de entrega.
 
 No contiene WooCommerce ni el plugin de Flow. Ambos deben mantenerse instalados
 por separado.
+
+## Versión 1.2 — preparada para el próximo hosting
+
+No se ha desplegado esta revisión. Si el tema y configurador ya están instalados,
+reemplaza sus carpetas o sube los ZIP como actualización, conservando sus nombres.
+No instales una segunda copia. Las páginas Pulseras y Chapitas se crean al cargar
+el tema actualizado; el plugin crea las tres chapitas sin duplicar SKU existentes.
+
+Los precios de chapitas se editan en **Productos → editar Chapita → General**.
+Consulta [el catálogo 1.2](../docs/CATALOGO-1.2.md) para tramos y validaciones.
 
 ## Orden recomendado
 

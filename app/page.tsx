@@ -1,6 +1,9 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import ProductCarousel from "./components/ProductCarousel";
+import ChapitasConfigurator from "./components/ChapitasConfigurator";
+import { itemTotal, itemName, validCartItem, type CartItem } from "./lib/catalog";
 
 const PRICE = 10500;
 const INSTAGRAM = "https://www.instagram.com/grafikpublicidad.cl";
@@ -11,7 +14,7 @@ const money = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-type CartItem = { quantity: number; color: string; files: string[]; designDetails: string; designLabel: string };
+
 
 const COLORS = [
   "Sin color específico",
@@ -47,10 +50,14 @@ export default function Home() {
     return { subtotal, discount, total: subtotal - discount };
   }, [quantity]);
 
-  const cartTotal = cart.reduce((total, item) => {
-    const subtotal = (item.quantity / 100) * PRICE;
-    return total + (item.quantity >= 1000 ? subtotal * 0.8 : subtotal);
-  }, 0);
+  const [cartReady, setCartReady] = useState(false);
+  useEffect(() => {
+    try { const saved = JSON.parse(sessionStorage.getItem("grafik-cart") || "[]"); if (Array.isArray(saved)) setCart(saved.filter(validCartItem)); } catch { /* Empty cart when storage is unavailable. */ }
+    setCartReady(true);
+  }, []);
+  useEffect(() => { if (cartReady) { try { sessionStorage.setItem("grafik-cart", JSON.stringify(cart)); } catch { /* Checkout retries storage explicitly. */ } } }, [cart, cartReady]);
+  const cartTotal = cart.reduce((total, item) => total + itemTotal(item), 0);
+  const addChapitas = (item: CartItem) => { setCart(items => [...items, {...item, designLabel: `Diseño ${items.length + 1}`}]); setCartOpen(true); };
 
   const addToCart = () => {
     setCart((items) => [
@@ -78,7 +85,7 @@ export default function Home() {
           <i><span /></i><span>Grafik <b>Publicidad</b></span>
         </a>
         <nav>
-          <a href="#inicio">Inicio</a><a href="#personaliza">Pulseras</a>
+          <a href="#inicio">Inicio</a><a href="#productos">Productos</a><a href="#personaliza">Pulseras</a><a href="#chapitas">Chapitas</a>
           <a href="#comprar">Cómo comprar</a><a href="#contacto">Contacto</a>
         </nav>
         <div className="header-actions">
@@ -87,31 +94,20 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="hero" id="inicio">
-        <div className="hero-copy">
-          <span className="eyebrow">Hechas para tu evento</span>
-          <h1>Pulseras Tyvek <em>personalizadas</em> para tu evento</h1>
-          <div className="hero-price">
-            <strong>100 unidades · $10.500</strong>
-            <span><b>20% DCTO.</b> desde 1.000 unidades</span>
-          </div>
-          <a className="cta" href="#personaliza">Personalizar ahora <b>→</b></a>
-          <div className="benefits">
-            <span>↑ Carga tu diseño</span><span>◷ Producción rápida</span>
-            <span>▱ Envíos a todo Chile</span>
-          </div>
-        </div>
-        <div className="hero-art" aria-label="Pulseras Tyvek reales personalizadas">
-          <img src="/assets/pulseras-tyvek-reales.png"
-            alt="Pulseras Tyvek reales impresas en colores fucsia, azul, rojo y amarillo" />
-          <div className="material"><b>TYVEK®</b><span>Resistentes al agua</span></div>
-        </div>
-      </section>
+      <ProductCarousel />
 
       <div className="strip">
         <span>✦ Impresión personalizada</span><span>✦ Control de acceso</span>
         <span>✦ Despacho nacional</span><span>✦ Atención directa</span>
       </div>
+
+      <section className="shell catalog-families" id="productos">
+        <div className="section-title"><span>Elige tu producto</span><h2>Tu idea, en el formato que quieras</h2><p>Productos personalizados para eventos, marcas y promociones.</p></div>
+        <div className="family-grid">
+          <a className="family-card" href="#personaliza"><img src="/assets/pulseras-tyvek-reales.png" alt="Pulseras Tyvek de colores" width="1024" height="1024" loading="lazy" /><div><span className="kicker">Eventos y accesos</span><h3>Pulseras Tyvek</h3><p>Desde 100 unidades. Elige tu color y adjunta tu diseño.</p><strong>100 unidades · $10.500</strong><span className="family-link">Personalizar pulseras →</span></div></a>
+          <a className="family-card" href="#chapitas"><img src="/assets/chapitas-catalogo.png" alt="Chapitas personalizadas con alfiler y llavero" width="1024" height="1024" loading="lazy" /><div><span className="kicker">Marcas y promociones</span><h3>Chapitas publicitarias</h3><p>58 mm. Alfiler, llavero y destapador llavero.</p><strong>Desde $400 c/u · alfiler, 101+ unidades</strong><span className="family-link">Personalizar chapitas →</span></div></a>
+        </div>
+      </section>
 
       <section className="shell configurator" id="personaliza">
         <div className="section-title">
@@ -184,12 +180,14 @@ export default function Home() {
         </div>
       </section>
 
+      <ChapitasConfigurator onAdd={addChapitas} />
+
       <section className="steps" id="comprar">
         <div className="shell">
-          <div className="section-title"><span>Simple y transparente</span><h2>De tu idea al evento en 4 pasos</h2></div>
+          <div className="section-title"><span>Simple y transparente</span><h2>De tu idea a tus manos en 4 pasos</h2></div>
           <div className="step-grid">
             {[
-              ["01", "Personaliza", "Elige cantidad, color y adjunta tu referencia."],
+              ["01", "Personaliza", "Elige tu producto, cantidad y adjunta tu referencia."],
               ["02", "Completa tus datos", "Elige retiro o envío y revisa el detalle de tu compra."],
               ["03", "Paga con Flow", "Selecciona el método disponible y paga de forma segura."],
               ["04", "Confirma el diseño", "Revisamos tu pedido y confirmamos contigo cómo quedará el diseño final."],
@@ -233,7 +231,7 @@ export default function Home() {
 
       <footer>
         <a className="logo" href="#inicio"><i><span /></i><span>Grafik <b>Publicidad</b></span></a>
-        <p>Pulseras para eventos, estampados y publicidad.</p>
+        <p>Pulseras, chapitas y productos personalizados.</p>
         <div><a href={INSTAGRAM}>Instagram</a><a href="#contacto">Contacto</a></div>
         <small>© 2026 Grafik Publicidad · Concepción, Chile</small>
       </footer>
@@ -243,9 +241,9 @@ export default function Home() {
           <div className="drawer-head"><div><span>Tu compra</span><h2>Carrito</h2></div>
             <button onClick={() => setCartOpen(false)}>×</button></div>
           {cart.length === 0 ? <div className="empty"><b>◫</b><h3>Tu carrito está vacío</h3>
-            <p>Personaliza tus pulseras para continuar.</p></div> : <>
+            <p>Elige tus productos y personalízalos para continuar.</p></div> : <>
             <div className="cart-items">{cart.map((item,index) => <article key={index}>
-              <i className={colorClass(item.color)} /><div><strong>{item.designLabel}</strong>
+              <img className="cart-product-image" src={item.product === "chapita" ? "/assets/chapitas-catalogo.png" : "/assets/pulseras-tyvek-reales.png"} alt="" /><div><strong>{itemName(item)}</strong><small>{item.designLabel}</small>
                 <span>{item.quantity.toLocaleString("es-CL")} unidades · {item.color}</span>
                 <small>{item.designDetails || "Sin indicaciones escritas"}</small>
                 <small>{item.files.length ? item.files.join(" · ") : "Sin archivos adjuntos"}</small></div>

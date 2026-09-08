@@ -29,5 +29,12 @@ test("renders development preview metadata", async () => {
     response.headers.get("content-type") ?? "",
     /^text\/html\b/i,
   );
-  assert.match(await response.text(), developmentPreviewMeta);
+  const html = await response.text();
+  assert.match(html, developmentPreviewMeta);
+  assert.match(html, /Productos personalizados para marcas y eventos/);
+  assert.match(html, /Chapitas de 58 mm/);
+  assert.match(html, /chapitas-catalogo\.png/);
+  assert.match(html, /Personalizar pulseras/);
+  assert.match(html, /Personalizar chapitas/);
+  assert.match(html, /Chapita destapador llavero/);
 });

@@ -19,3 +19,10 @@ Tema clásico de WordPress preparado para WooCommerce y para el plugin
 - La portada conserva una tarjeta destacada para el configurador Tyvek.
 
 El tema no contiene credenciales, claves de Flow ni datos de clientes.
+
+## Versión 1.2
+
+Carrusel automático de pulseras y chapitas, catálogo con dos familias destacadas
+y páginas de personalización Pulseras y Chapitas. Instalar junto con la versión
+1.2 del configurador. Las imágenes vienen incluidas y los enlaces se calculan
+desde WordPress, sin depender del dominio anterior.

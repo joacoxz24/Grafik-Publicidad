@@ -10,71 +10,31 @@ get_header();
 
 $instagram = grafik_instagram_url();
 $instagram_shortcode = trim( (string) get_theme_mod( 'grafik_instagram_shortcode', '' ) );
-$hero      = get_theme_mod( 'grafik_hero_title', 'Pulseras Tyvek personalizadas para tu evento' );
+
 ?>
 <main>
-	<section class="hero" id="inicio">
-		<div class="hero-copy">
-			<span class="eyebrow">Hechas para tu evento</span>
-			<h1>
-				<?php
-				$hero_parts = explode( 'personalizadas', $hero, 2 );
-				echo esc_html( $hero_parts[0] );
-				if ( isset( $hero_parts[1] ) ) {
-					echo '<em>personalizadas</em>' . esc_html( $hero_parts[1] );
-				}
-				?>
-			</h1>
-			<div class="hero-price">
-				<strong>100 unidades · $10.500</strong>
-				<span><b>20% DCTO.</b> desde 1.000 unidades</span>
-			</div>
-			<a class="cta" href="#personaliza">Personalizar ahora <b>→</b></a>
-			<div class="benefits">
-				<span>↑ Carga tu diseño</span>
-				<span>◷ Producción rápida</span>
-				<span>▱ Envíos a todo Chile</span>
-			</div>
-		</div>
-		<div class="hero-art" aria-label="Pulseras Tyvek reales personalizadas">
-			<img
-				src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/pulseras-tyvek-reales.png' ); ?>"
-				alt="Pulseras Tyvek reales impresas en colores fucsia, azul, rojo y amarillo"
-			>
-			<div class="material"><b>TYVEK®</b><span>Resistentes al agua</span></div>
-		</div>
-	</section>
+	<?php get_template_part( 'template-parts/product-carousel' ); ?>
 
 	<div class="strip">
 		<span>✦ Impresión personalizada</span>
-		<span>✦ Control de acceso</span>
+		<span>✦ Marcas y eventos</span>
 		<span>✦ Despacho nacional</span>
 		<span>✦ Atención directa</span>
 	</div>
 
-	<section class="shell configurator" id="personaliza">
-		<div class="section-title">
-			<span>Tu pulsera, a tu manera</span>
-			<h2>Personaliza y cotiza al instante</h2>
-			<p>Selecciona cantidad, color y adjunta tu logo o diseño de referencia.</p>
-		</div>
-		<?php if ( shortcode_exists( 'grafik_tyvek_configurator' ) ) : ?>
-			<?php echo do_shortcode( '[grafik_tyvek_configurator]' ); ?>
-		<?php else : ?>
-			<div class="grafik-plugin-required">
-				<p>Activa el plugin <strong>Grafik Configurador Tyvek</strong> para habilitar la compra.</p>
-			</div>
-		<?php endif; ?>
+	<section class="shell catalog-families" id="productos">
+		<div class="section-title"><span>Elige tu producto</span><h2>Tu idea, en el formato que quieras</h2><p>Productos personalizados para eventos, marcas y promociones.</p></div>
+		<?php get_template_part( 'template-parts/product-families' ); ?>
 	</section>
 
 	<section class="steps" id="comprar">
 		<div class="shell">
 			<div class="section-title">
 				<span>Simple y transparente</span>
-				<h2>De tu idea al evento en 4 pasos</h2>
+				<h2>De tu idea a tus manos en 4 pasos</h2>
 			</div>
 			<div class="step-grid">
-				<article><span>01</span><h3>Personaliza</h3><p>Elige cantidad, color y adjunta tu referencia.</p></article>
+				<article><span>01</span><h3>Personaliza</h3><p>Elige tu producto, cantidad y adjunta tu referencia.</p></article>
 				<article><span>02</span><h3>Completa tus datos</h3><p>Elige retiro o envío y revisa el detalle de tu compra.</p></article>
 				<article><span>03</span><h3>Paga con Flow</h3><p>Selecciona el método disponible y paga de forma segura.</p></article>
 				<article><span>04</span><h3>Confirma el diseño</h3><p>Revisamos tu pedido y confirmamos contigo cómo quedará el diseño final.</p></article>
@@ -107,7 +67,7 @@ $hero      = get_theme_mod( 'grafik_hero_title', 'Pulseras Tyvek personalizadas 
 					</a>
 				<?php endfor; ?>
 			</div>
-			<small>Conecta el plugin de Instagram y pega su shortcode en el Personalizador para activar la actualización automática.</small>
+
 		<?php endif; ?>
 	</section>
 
@@ -115,7 +75,7 @@ $hero      = get_theme_mod( 'grafik_hero_title', 'Pulseras Tyvek personalizadas 
 		<div>
 			<span class="kicker">Hablemos de tu pedido</span>
 			<h2>¿Necesitas ayuda antes de comprar?</h2>
-			<p>Cuéntanos la fecha de tu evento, cantidad y ciudad.</p>
+			<p>Cuéntanos qué producto necesitas, la cantidad y tu ciudad.</p>
 			<ul>
 				<li>Atención personalizada</li>
 				<li>Envíos a todo Chile</li>
@@ -139,14 +99,14 @@ $hero      = get_theme_mod( 'grafik_hero_title', 'Pulseras Tyvek personalizadas 
 				<label>
 					Cantidad estimada
 					<select name="quantity">
-						<option value="100">100 unidades</option>
+						<option value="5">5 unidades</option><option value="10">10 unidades</option><option value="50">50 unidades</option><option value="100">100 unidades</option>
 						<option value="500" selected>500 unidades</option>
 						<option value="1000">1.000 unidades</option>
 						<option value="2000">2.000 o más</option>
 					</select>
 				</label>
 			</div>
-			<label>Cuéntanos sobre tu evento<textarea required name="message" rows="5" placeholder="Fecha, ciudad y detalles..."></textarea></label>
+			<label>Cuéntanos sobre tu pedido<textarea required name="message" rows="5" placeholder="Producto, fecha, ciudad y detalles..."></textarea></label>
 			<label class="check"><input type="checkbox" name="marketing" value="1"> Quiero recibir promociones y novedades.</label>
 			<button class="cta full" type="submit">Enviar consulta <b>→</b></button>
 		</form>

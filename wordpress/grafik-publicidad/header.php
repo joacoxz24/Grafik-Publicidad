@@ -34,7 +34,8 @@ $count    = function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_content
 		</a>
 		<nav aria-label="<?php esc_attr_e( 'Navegación principal', 'grafik-publicidad' ); ?>">
 			<a href="<?php echo esc_url( home_url( '/#inicio' ) ); ?>">Inicio</a>
-			<a href="<?php echo esc_url( home_url( '/#personaliza' ) ); ?>">Pulseras</a>
+			<a href="<?php echo esc_url( grafik_configurator_url( 'pulseras' ) ); ?>">Pulseras</a>
+			<a href="<?php echo esc_url( grafik_configurator_url( 'chapitas' ) ); ?>">Chapitas</a>
 			<a href="<?php echo esc_url( grafik_products_url() ); ?>">Productos</a>
 			<a href="<?php echo esc_url( home_url( '/#comprar' ) ); ?>">Cómo comprar</a>
 			<a href="<?php echo esc_url( home_url( '/#contacto' ) ); ?>">Contacto</a>

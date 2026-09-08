@@ -2,32 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
-const PRICE = 10500;
-
-type CartItem = {
-  quantity: number;
-  color: string;
-  files: string[];
-  designDetails: string;
-  designLabel: string;
-};
-
-const money = (value: number) =>
-  new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    maximumFractionDigits: 0,
-  }).format(value);
-
-const itemTotal = (item: CartItem) => {
-  const subtotal = (item.quantity / 100) * PRICE;
-  return item.quantity >= 1000 ? subtotal * 0.8 : subtotal;
-};
-
-const colorClass = (value: string) =>
-  value === "Sin color específico"
-    ? "sin-color"
-    : value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+import { itemName, itemTotal, validCartItem, money, type CartItem } from "../lib/catalog";
 
 export default function CheckoutPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -39,7 +14,8 @@ export default function CheckoutPage() {
     const stored = window.sessionStorage.getItem("grafik-cart");
     if (stored) {
       try {
-        setCart(JSON.parse(stored) as CartItem[]);
+        const parsed = JSON.parse(stored);
+        setCart(Array.isArray(parsed) ? parsed.filter(validCartItem) : []);
       } catch {
         window.sessionStorage.removeItem("grafik-cart");
       }
@@ -71,8 +47,8 @@ export default function CheckoutPage() {
         <section className="checkout-empty">
           <span className="kicker">Tu compra</span>
           <h1>Tu carrito está vacío</h1>
-          <p>Agrega al menos un diseño de pulsera antes de continuar al pago.</p>
-          <a className="cta" href="/#personaliza">Personalizar pulseras <b>→</b></a>
+          <p>Agrega al menos un producto personalizado antes de continuar al pago.</p>
+          <a className="cta" href="/#productos">Ver productos <b>→</b></a>
         </section>
       </main>
     );
@@ -153,7 +129,7 @@ export default function CheckoutPage() {
               )}
             </fieldset>
 
-            <label className="check"><input type="checkbox" /> Quiero recibir promociones y novedades por correo.</label>
+            <label className="check"><input type="checkbox" defaultChecked /> Quiero recibir promociones y novedades por correo.</label>
           </form>
         </section>
 
@@ -165,9 +141,9 @@ export default function CheckoutPage() {
           <div className="checkout-items">
             {cart.map((item, index) => (
               <article key={`${item.designLabel}-${index}`}>
-                <i className={colorClass(item.color)} />
+                <img className="cart-product-image" src={item.product === "chapita" ? "/assets/chapitas-catalogo.png" : "/assets/pulseras-tyvek-reales.png"} alt="" />
                 <div>
-                  <strong>{item.designLabel}</strong>
+                  <strong>{itemName(item)}</strong><small>{item.designLabel}</small>
                   <span>{item.quantity.toLocaleString("es-CL")} unidades · {item.color}</span>
                   <small>{item.designDetails || "Sin indicaciones escritas"}</small>
                   <small>{item.files.length ? item.files.join(" · ") : "Sin archivos adjuntos"}</small>

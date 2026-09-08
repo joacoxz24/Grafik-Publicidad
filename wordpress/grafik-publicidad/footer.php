@@ -14,7 +14,7 @@ $checkout = function_exists( 'is_checkout' ) && is_checkout() && ! is_order_rece
 		<a class="logo" href="<?php echo esc_url( home_url( '/#inicio' ) ); ?>">
 			<i><span></span></i><span>Grafik <b>Publicidad</b></span>
 		</a>
-		<p><?php esc_html_e( 'Pulseras para eventos, estampados y publicidad.', 'grafik-publicidad' ); ?></p>
+		<p><?php esc_html_e( 'Pulseras, chapitas y productos personalizados.', 'grafik-publicidad' ); ?></p>
 		<div>
 			<a href="<?php echo esc_url( grafik_instagram_url() ); ?>" target="_blank" rel="noopener">Instagram</a>
 			<a href="<?php echo esc_url( home_url( '/#contacto' ) ); ?>">Contacto</a>

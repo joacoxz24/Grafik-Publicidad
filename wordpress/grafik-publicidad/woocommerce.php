@@ -13,17 +13,10 @@ get_header();
 		<section class="grafik-products-hero">
 			<span class="kicker">Tienda Grafik</span>
 			<h1>Productos personalizados</h1>
-			<p>Encuentra aquí todos nuestros productos. Iremos agregando nuevas opciones y podrás administrarlas directamente desde WooCommerce.</p>
+			<p>Elige entre pulseras Tyvek y chapitas publicitarias. Personaliza tu diseño y cotiza al instante.</p>
 		</section>
-		<section class="grafik-featured-product">
-			<div>
-				<span class="kicker">Producto destacado</span>
-				<h2>Pulseras Tyvek personalizadas</h2>
-				<p>Elige cantidad, color, detalles y adjunta tu logo o diseño. Desde 100 unidades.</p>
-				<strong>100 unidades · $10.500</strong>
-			</div>
-			<a class="cta small" href="<?php echo esc_url( home_url( '/#personaliza' ) ); ?>">Personalizar <b>→</b></a>
-		</section>
+		<?php get_template_part( 'template-parts/product-families' ); ?>
+
 	<?php endif; ?>
 	<?php woocommerce_content(); ?>
 </main>

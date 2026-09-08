@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       Grafik Configurador Tyvek
+ * Plugin Name:       Grafik Configurador de Productos
  * Plugin URI:        https://odcpublicidad.cl
- * Description:       Configurador seguro de pulseras Tyvek para WooCommerce, con archivos por diseño, descuento y datos de despacho.
- * Version:           1.1.0
+ * Description:       Pulseras Tyvek y chapitas publicitarias de 58 mm para WooCommerce, con archivos por diseño, descuentos y datos de despacho.
+ * Version:           1.2.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.1.0' );
+define( 'GRAFIK_TYVEK_VERSION', '1.2.0' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
@@ -553,7 +553,7 @@ final class Grafik_Tyvek_Configurator {
 	/**
 	 * @return array<int,array{name:string,path:string,type:string}>
 	 */
-	private function receive_files(): array {
+	public function receive_files(): array {
 		if ( empty( $_FILES['grafik_files']['name'] ) ) {
 			return array();
 		}
@@ -644,7 +644,7 @@ final class Grafik_Tyvek_Configurator {
 	/**
 	 * @param array<int,array{name:string,path:string,type:string}> $files Files.
 	 */
-	private function remove_received_files( array $files ): void {
+	public function remove_received_files( array $files ): void {
 		foreach ( $files as $file ) {
 			if ( ! empty( $file['path'] ) && is_file( $file['path'] ) ) {
 				unlink( $file['path'] );
@@ -658,7 +658,7 @@ final class Grafik_Tyvek_Configurator {
 		}
 
 		foreach ( $cart->get_cart() as $cart_item ) {
-			if ( empty( $cart_item['grafik_item_uuid'] ) || empty( $cart_item['data'] ) ) {
+			if ( (int) ( $cart_item['product_id'] ?? 0 ) !== absint( get_option( self::PRODUCT_OPTION ) ) || empty( $cart_item['grafik_item_uuid'] ) || empty( $cart_item['data'] ) ) {
 				continue;
 			}
 
@@ -686,12 +686,12 @@ final class Grafik_Tyvek_Configurator {
 			return $passed;
 		}
 
-		wc_add_notice( 'Personaliza primero la cantidad, color y diseño de tus pulseras en la página de inicio.', 'error' );
+		wc_add_notice( 'Personaliza primero la cantidad, color y diseño de tus pulseras en la página Pulseras.', 'error' );
 		return false;
 	}
 
 	public function cart_item_data( array $data, array $cart_item ): array {
-		if ( empty( $cart_item['grafik_item_uuid'] ) ) {
+		if ( (int) ( $cart_item['product_id'] ?? 0 ) !== absint( get_option( self::PRODUCT_OPTION ) ) || empty( $cart_item['grafik_item_uuid'] ) ) {
 			return $data;
 		}
 
@@ -710,7 +710,7 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	public function cart_quantity_label( string $html, string $cart_item_key, array $cart_item ): string {
-		if ( empty( $cart_item['grafik_item_uuid'] ) ) {
+		if ( (int) ( $cart_item['product_id'] ?? 0 ) !== absint( get_option( self::PRODUCT_OPTION ) ) || empty( $cart_item['grafik_item_uuid'] ) ) {
 			return $html;
 		}
 		$units = max( 100, (int) $cart_item['quantity'] * 100 );
@@ -723,7 +723,7 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	public function validate_cart_quantity( bool $passed, string $cart_item_key, array $values, int $quantity ): bool {
-		if ( empty( $values['grafik_item_uuid'] ) ) {
+		if ( (int) ( $values['product_id'] ?? 0 ) !== absint( get_option( self::PRODUCT_OPTION ) ) || empty( $values['grafik_item_uuid'] ) ) {
 			return $passed;
 		}
 		if ( $quantity < 1 || ( $quantity * 100 ) > $this->max_units() ) {
@@ -734,13 +734,13 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	public function sync_cart_units( string $cart_item_key, int $quantity, int $old_quantity, WC_Cart $cart ): void {
-		if ( isset( $cart->cart_contents[ $cart_item_key ]['grafik_item_uuid'] ) ) {
+		if ( (int) ( $cart->cart_contents[ $cart_item_key ]['product_id'] ?? 0 ) === absint( get_option( self::PRODUCT_OPTION ) ) && isset( $cart->cart_contents[ $cart_item_key ]['grafik_item_uuid'] ) ) {
 			$cart->cart_contents[ $cart_item_key ]['grafik_units'] = $quantity * 100;
 		}
 	}
 
 	public function create_order_item( WC_Order_Item_Product $item, string $cart_item_key, array $values, WC_Order $order ): void {
-		if ( empty( $values['grafik_item_uuid'] ) ) {
+		if ( (int) ( $values['product_id'] ?? 0 ) !== absint( get_option( self::PRODUCT_OPTION ) ) || empty( $values['grafik_item_uuid'] ) ) {
 			return;
 		}
 
@@ -1126,3 +1126,7 @@ add_action(
 		Grafik_Tyvek_Configurator::instance();
 	}
 );
+
+add_action( 'plugins_loaded', static function (): void {
+	if ( class_exists( 'WooCommerce' ) ) { require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-chapitas.php'; }
+}, 25 );

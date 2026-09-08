@@ -1,6 +1,15 @@
 # Grafik Publicidad
 
-Frontend de la tienda de pulseras Tyvek personalizadas de Grafik Publicidad.
+Tienda de productos personalizados de Grafik Publicidad: pulseras Tyvek y chapitas de 58 mm.
+
+## Actualización 1.2 (código, sin despliegue)
+
+Portada con carrusel automático, familias de productos con igual protagonismo y
+configurador de chapitas alfiler, llavero y destapador llavero.
+Ver [precios, cambios y comprobaciones](docs/CATALOGO-1.2.md).
+
+La carpeta `wordpress/` contiene la versión para el nuevo hosting. Esta revisión
+no se ha aplicado al hosting actual.
 
 ## Estado actual
 
@@ -70,7 +79,7 @@ npm run build
 No se incluye el plugin personalizado de Flow/WooCommerce porque ya fue instalado por separado. Tampoco se incluye el plugin completo de WooCommerce.
 
 La adaptación para WordPress/WooCommerce ya está disponible en la carpeta
-`wordpress/` y es la versión utilizada en `odcpublicidad.cl`.
+`wordpress/` y contiene la siguiente versión preparada para migrar.
 
 ## Versión WordPress
 
