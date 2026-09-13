@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.2.0' );
+define( 'GRAFIK_THEME_VERSION', '1.3.0' );
 
 function grafik_theme_setup(): void {
 	load_theme_textdomain( 'grafik-publicidad', get_template_directory() . '/languages' );
