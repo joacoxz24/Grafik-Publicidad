@@ -30,7 +30,7 @@
       event.preventDefault(); if (busy || !form.reportValidity()) return;
       busy = true; render(false); button.textContent = 'Agregando…'; message.replaceChildren();
       try {
-        var response = await fetch(form.action, {method:'POST',body:new FormData(form),credentials:'same-origin'});
+        var response = await fetch(form.getAttribute('action'), {method:'POST',body:new FormData(form),credentials:'same-origin'});
         var result = await response.json();
         if (!response.ok || !result.success) throw new Error(result.data && result.data.message || 'No pudimos agregar el diseño. Inténtalo nuevamente.');
         message.textContent = 'Diseño agregado al carrito. ';
