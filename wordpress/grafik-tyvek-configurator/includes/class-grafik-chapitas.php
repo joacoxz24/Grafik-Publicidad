@@ -5,10 +5,11 @@ final class Grafik_Chapitas {
 	public const TYPES = array(
 		'alfiler' => array( 'name' => 'Chapita alfiler', 'minimum' => 10, 'price' => 500, 'threshold' => 101, 'bulk' => 400 ),
 		'llavero' => array( 'name' => 'Chapita llavero', 'minimum' => 5, 'price' => 750, 'threshold' => 51, 'bulk' => 650 ),
-		'destapador' => array( 'name' => 'Chapita destapador llavero', 'minimum' => 5, 'price' => 950, 'threshold' => 51, 'bulk' => 750 ),
+		'destapador' => array( 'name' => 'Chapita destapador llavero', 'minimum' => 5, 'price' => 950, 'threshold' => 51, 'bulk' => 860 ),
 	);
 	public function __construct() {
 		add_action( 'init', array( $this, 'setup' ), 35 );
+		add_action( 'init', array( $this, 'upgrade_bulk_price' ), 36 );
 		add_shortcode( 'grafik_chapitas_configurator', array( $this, 'shortcode' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'wp_ajax_grafik_chapitas_add', array( $this, 'add' ) );
@@ -67,6 +68,17 @@ final class Grafik_Chapitas {
 			update_option( 'grafik_chapita_' . $kind . '_id', $id );
 		}
 		update_option( 'grafik_chapitas_installed', '1' );
+	}
+	/** Update the former default once, preserving later administrative prices. */
+	public function upgrade_bulk_price(): void {
+		if ( ! class_exists( 'WooCommerce' ) || get_option( 'grafik_chapitas_bulk_121' ) ) { return; }
+		$product = wc_get_product( self::id( 'destapador' ) );
+		if ( ! $product ) { return; }
+		if ( 750.0 === (float) $product->get_meta( '_grafik_chapita_bulk' ) ) {
+			$product->update_meta_data( '_grafik_chapita_bulk', 860 );
+			if ( ! $product->save() ) { return; }
+		}
+		update_option( 'grafik_chapitas_bulk_121', '1' );
 	}
 	public function product_redirect(): void {
 		if ( ! is_product() ) { return; }

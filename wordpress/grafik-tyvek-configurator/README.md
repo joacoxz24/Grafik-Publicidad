@@ -8,7 +8,11 @@ de Flow.
 - Producto Tyvek y tres tipos de chapitas creados automáticamente.
 - Chapitas alfiler: mínimo 10, $500 c/u; desde 101, $400 c/u.
 - Chapitas llavero: mínimo 5, $750 c/u; desde 51, $650 c/u.
-- Chapitas destapador llavero: mínimo 5, $950 c/u; desde 51, $750 c/u.
+- Chapitas destapador llavero: mínimo 5, $950 c/u; desde 51, $860 c/u.
+
+La versión 1.2.1 actualiza una sola vez el precio mayorista anterior de $750
+a $860 en productos destapador existentes. Conserva otros precios personalizados
+y permite editar el valor después desde WooCommerce.
 - Tramos de chapitas editables en los datos de cada producto.
 - Precio por cada 100 unidades.
 - Cantidad de 100 en 100.

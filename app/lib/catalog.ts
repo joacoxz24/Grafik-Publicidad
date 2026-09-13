@@ -2,7 +2,7 @@ export type ChapitaKind = "alfiler" | "llavero" | "destapador";
 export const CHAPITAS = {
   alfiler: { name: "Chapita alfiler", minimum: 10, price: 500, threshold: 101, bulkPrice: 400 },
   llavero: { name: "Chapita llavero", minimum: 5, price: 750, threshold: 51, bulkPrice: 650 },
-  destapador: { name: "Chapita destapador llavero", minimum: 5, price: 950, threshold: 51, bulkPrice: 750 },
+  destapador: { name: "Chapita destapador llavero", minimum: 5, price: 950, threshold: 51, bulkPrice: 860 },
 } as const;
 export type CartItem = { product?: "tyvek" | "chapita"; variant?: ChapitaKind; quantity: number; color: string; files: string[]; designDetails: string; designLabel: string };
 export const money = (value: number) => new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(value);

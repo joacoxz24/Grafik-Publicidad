@@ -50,7 +50,7 @@ require __DIR__.'/../../wordpress/grafik-tyvek-configurator/includes/class-grafi
 $chapitas=new Grafik_Chapitas(); $tyvek=Grafik_Tyvek_Configurator::instance();
 $chapitas->setup(); expect(count($GLOBALS['products']),3,'Three products created');
 $chapitas->setup(); expect(count($GLOBALS['products']),3,'Setup is idempotent');
-foreach ([['alfiler',10,500],['alfiler',100,500],['alfiler',101,400],['llavero',5,750],['llavero',50,750],['llavero',51,650],['destapador',5,950],['destapador',50,950],['destapador',51,750]] as [$kind,$q,$price]) {
+foreach ([['alfiler',10,500],['alfiler',100,500],['alfiler',101,400],['llavero',5,750],['llavero',50,750],['llavero',51,650],['destapador',5,950],['destapador',50,950],['destapador',51,860]] as [$kind,$q,$price]) {
  $rule=Grafik_Chapitas::rule($kind);
  expect(Grafik_Chapitas::unit_price($rule,$q),(float)$price,"Price $kind $q");
  $data=['grafik_item_uuid'=>'test','grafik_chapita'=>$kind];
@@ -89,4 +89,21 @@ expect(json_decode($orderItem->meta['_grafik_files'],true)[0]['path'],'/protecte
 $cart->cart_contents['chapita']['quantity']=5;$chapitas->prices($cart);
 expect($cart->cart_contents['chapita']['data']->price,750.0,'Price recalculated when quantity falls below tier');
 $before=count($GLOBALS['notices']);$cart->cart_contents['chapita']['quantity']=1;$chapitas->check_cart();expect(count($GLOBALS['notices'])>$before,true,'Invalid cart blocked at checkout');
+
+$destapador=wc_get_product(Grafik_Chapitas::id('destapador'));
+$destapador->update_meta_data('_grafik_chapita_bulk',750);
+$chapitas->upgrade_bulk_price();
+expect(Grafik_Chapitas::rule('destapador')['bulk'],860.0,'Existing default migrates to 860');
+$cart->cart_contents['destapador']=['product_id'=>$destapador->get_id(),'quantity'=>51,'data'=>clone $destapador];
+$chapitas->prices($cart);
+expect($cart->cart_contents['destapador']['data']->price*51,43860.0,'51 destapadores total');
+$cart->cart_contents['destapador']['quantity']=50;$chapitas->prices($cart);
+expect($cart->cart_contents['destapador']['data']->price,950.0,'50 destapadores retain regular price');
+$destapador->update_meta_data('_grafik_chapita_bulk',750);
+$chapitas->upgrade_bulk_price();
+expect(Grafik_Chapitas::rule('destapador')['bulk'],750.0,'Migration does not repeat after admin edit');
+unset($GLOBALS['options']['grafik_chapitas_bulk_121']);
+$destapador->update_meta_data('_grafik_chapita_bulk',880);
+$chapitas->upgrade_bulk_price();
+expect(Grafik_Chapitas::rule('destapador')['bulk'],880.0,'Migration preserves custom price');
 echo 'PASS: '.$GLOBALS['checks']." catalog assertions\n";

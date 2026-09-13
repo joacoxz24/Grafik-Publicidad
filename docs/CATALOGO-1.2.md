@@ -23,7 +23,12 @@ no aparecen repetidos como tres tarjetas adicionales.
 | --- | ---: | ---: | --- |
 | Alfiler | 10 | $500, de 10 a 100 | $400 desde 101 |
 | Llavero | 5 | $750, de 5 a 50 | $650 desde 51 |
-| Destapador llavero | 5 | $950, de 5 a 50 | $750 desde 51 |
+| Destapador llavero | 5 | $950, de 5 a 50 | $860 desde 51 |
+
+Actualización 1.2.1 (13 de septiembre de 2026): el plugin migra una sola vez el
+precio mayorista de destapador guardado en $750 a $860. Otros precios editados
+en WooCommerce se conservan. El cambio aplica a nuevas compras y al recálculo
+del carrito; no modifica pedidos históricos.
 
 “Sobre 50” y “sobre 100” se interpretaron literalmente como 51 y 101. Los
 tramos aplican por diseño y formato; no se suman diseños distintos para el
