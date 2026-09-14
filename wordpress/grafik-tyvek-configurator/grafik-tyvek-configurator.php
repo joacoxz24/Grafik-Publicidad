@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador de Productos
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Pulseras Tyvek y chapitas publicitarias de 58 mm para WooCommerce, con archivos por diseño, descuentos y datos de despacho.
- * Version:           1.2.2
+ * Version:           1.3.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.2.2' );
+define( 'GRAFIK_TYVEK_VERSION', '1.3.0' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
@@ -54,6 +54,10 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	private function __construct() {
+		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-order-files.php';
+		Grafik_Order_Files::boot();
+		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-flow-lifecycle.php';
+		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-mail-transport.php';
 		add_action( 'init', array( $this, 'register_order_statuses' ), 10 );
 		add_action( 'init', array( $this, 'maybe_setup' ), 30 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
@@ -752,36 +756,12 @@ final class Grafik_Tyvek_Configurator {
 		$item->add_meta_data( 'Color base', $values['grafik_color'] ?? 'Sin color específico', true );
 		$item->add_meta_data( 'Detalles', $values['grafik_details'] ?: 'Sin indicaciones escritas', true );
 		$item->add_meta_data( 'Archivos', $names ? implode( ' · ', $names ) : 'Sin archivos adjuntos', true );
-		$item->add_meta_data( '_grafik_files', wp_json_encode( $files ), true );
+		$item->add_meta_data( '_grafik_files', wp_json_encode( Grafik_Order_Files::stage( $files ) ), true );
 		$item->add_meta_data( '_grafik_item_uuid', $values['grafik_item_uuid'], true );
 	}
 
 	public function secure_order_files( WC_Order $order ): void {
-		$uploads = wp_upload_dir();
-		$base    = trailingslashit( $uploads['basedir'] ) . 'grafik-designs/orders/' . $order->get_id();
-
-		foreach ( $order->get_items() as $item_id => $item ) {
-			$files = json_decode( (string) $item->get_meta( '_grafik_files', true ), true );
-			if ( ! is_array( $files ) || ! $files ) {
-				continue;
-			}
-
-			$directory = trailingslashit( $base ) . $item_id;
-			$this->protect_directory( $directory );
-			$moved = array();
-			foreach ( $files as $file ) {
-				if ( empty( $file['path'] ) || ! is_file( $file['path'] ) ) {
-					continue;
-				}
-				$target = trailingslashit( $directory ) . wp_unique_filename( $directory, wp_basename( $file['path'] ) );
-				if ( rename( $file['path'], $target ) ) {
-					$file['path'] = $target;
-				}
-				$moved[] = $file;
-			}
-			$item->update_meta_data( '_grafik_files', wp_json_encode( $moved ) );
-			$item->save();
-		}
+		Grafik_Order_Files::finalize( $order );
 	}
 
 	public function delivery_fields( WC_Checkout $checkout ): void {
@@ -924,62 +904,11 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	public function admin_file_links( int $item_id, WC_Order_Item $item, $product ): void {
-		if ( ! is_admin() || ! current_user_can( 'manage_woocommerce' ) ) {
-			return;
-		}
-		$files = json_decode( (string) $item->get_meta( '_grafik_files', true ), true );
-		if ( ! is_array( $files ) || ! $files ) {
-			return;
-		}
-		$order_id = $item->get_order_id();
-		echo '<div class="grafik-admin-files"><strong>Diseños protegidos:</strong> ';
-		foreach ( $files as $index => $file ) {
-			$url = wp_nonce_url(
-				admin_url(
-					'admin-post.php?action=grafik_download_design&order_id=' . $order_id . '&item_id=' . $item_id . '&file=' . $index
-				),
-				'grafik_download_' . $order_id . '_' . $item_id . '_' . $index
-			);
-			echo '<a class="button button-small" href="' . esc_url( $url ) . '">' . esc_html( $file['name'] ?? 'Archivo' ) . '</a> ';
-		}
-		echo '</div>';
+		Grafik_Order_Files::admin( $item );
 	}
 
 	public function download_design(): void {
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( 'No tienes permiso para descargar estos archivos.', 403 );
-		}
-
-		$order_id = isset( $_GET['order_id'] ) ? absint( $_GET['order_id'] ) : 0;
-		$item_id  = isset( $_GET['item_id'] ) ? absint( $_GET['item_id'] ) : 0;
-		$index    = isset( $_GET['file'] ) ? absint( $_GET['file'] ) : 0;
-		check_admin_referer( 'grafik_download_' . $order_id . '_' . $item_id . '_' . $index );
-
-		$order = wc_get_order( $order_id );
-		$item  = $order ? $order->get_item( $item_id ) : false;
-		if ( ! $item ) {
-			wp_die( 'El archivo solicitado no existe.', 404 );
-		}
-
-		$files = json_decode( (string) $item->get_meta( '_grafik_files', true ), true );
-		$file  = is_array( $files ) && isset( $files[ $index ] ) ? $files[ $index ] : null;
-		if ( ! $file || empty( $file['path'] ) || ! is_file( $file['path'] ) ) {
-			wp_die( 'El archivo solicitado no existe.', 404 );
-		}
-
-		$uploads = wp_upload_dir();
-		$root    = realpath( trailingslashit( $uploads['basedir'] ) . 'grafik-designs' );
-		$path    = realpath( $file['path'] );
-		if ( ! $root || ! $path || ! str_starts_with( $path, $root . DIRECTORY_SEPARATOR ) ) {
-			wp_die( 'Ruta de archivo no válida.', 403 );
-		}
-
-		nocache_headers();
-		header( 'Content-Type: ' . sanitize_mime_type( $file['type'] ?? 'application/octet-stream' ) );
-		header( 'Content-Disposition: attachment; filename="' . rawurlencode( sanitize_file_name( $file['name'] ?? wp_basename( $path ) ) ) . '"' );
-		header( 'Content-Length: ' . filesize( $path ) );
-		readfile( $path );
-		exit;
+		Grafik_Order_Files::download();
 	}
 
 	public function cleanup_uploads(): void {

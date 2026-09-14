@@ -19,6 +19,9 @@ function is_admin() { return false; }
 function wp_doing_ajax() { return false; }
 function wp_list_pluck($rows,$key) { return array_column($rows,$key); }
 function wp_json_encode($value) { return json_encode($value); }
+function wp_upload_dir() { return ['basedir'=>'/protected']; }
+function sanitize_file_name($value) { return basename($value); }
+function sanitize_mime_type($value) { return $value; }
 function esc_attr($value) { return htmlspecialchars((string)$value); }
 function esc_html($value) { return htmlspecialchars((string)$value); }
 function WC() { return $GLOBALS['wc']; }
@@ -67,7 +70,7 @@ foreach(['alfiler'=>9,'llavero'=>4,'destapador'=>4] as $kind=>$quantity) {
 $cart=new WC_Cart(); $GLOBALS['wc']=(object)['cart'=>$cart];
 $cart->cart_contents=[
  'tyvek'=>['product_id'=>1,'quantity'=>10,'grafik_item_uuid'=>'t','data'=>new WC_Product(),'grafik_details'=>'VIP','grafik_files'=>[]],
- 'chapita'=>['product_id'=>Grafik_Chapitas::id('llavero'),'quantity'=>51,'grafik_item_uuid'=>'c','grafik_chapita'=>'llavero','data'=>clone wc_get_product(Grafik_Chapitas::id('llavero')),'grafik_details'=>'Logo','grafik_files'=>[['name'=>'logo.pdf','path'=>'/protected/logo.pdf']]],
+ 'chapita'=>['product_id'=>Grafik_Chapitas::id('llavero'),'quantity'=>51,'grafik_item_uuid'=>'c','grafik_chapita'=>'llavero','data'=>clone wc_get_product(Grafik_Chapitas::id('llavero')),'grafik_details'=>'Logo','grafik_files'=>[['name'=>'logo.pdf','path'=>'/protected/grafik-designs/cart/session/logo.pdf']]],
  'chapita2'=>['product_id'=>Grafik_Chapitas::id('llavero'),'quantity'=>5,'grafik_item_uuid'=>'c2','grafik_chapita'=>'llavero','data'=>clone wc_get_product(Grafik_Chapitas::id('llavero')),'grafik_details'=>'Other design','grafik_files'=>[]],
  'other'=>['product_id'=>99,'quantity'=>1,'data'=>new WC_Product()]
 ];
@@ -85,7 +88,7 @@ $tyvek->create_order_item($orderItem,'chapita',$line,$order);$chapitas->order_it
 expect($orderItem->meta['Formato'],'Chapita llavero · 58 mm','Order format');
 expect($orderItem->meta['Archivos'],'logo.pdf','Order design file');
 expect(isset($orderItem->meta['Color base']),false,'No Tyvek metadata');
-expect(json_decode($orderItem->meta['_grafik_files'],true)[0]['path'],'/protected/logo.pdf','Protected file metadata retained');
+expect(json_decode($orderItem->meta['_grafik_files'],true)[0]['relative_path'],'cart/session/logo.pdf','Protected relative file metadata retained');
 $cart->cart_contents['chapita']['quantity']=5;$chapitas->prices($cart);
 expect($cart->cart_contents['chapita']['data']->price,750.0,'Price recalculated when quantity falls below tier');
 $before=count($GLOBALS['notices']);$cart->cart_contents['chapita']['quantity']=1;$chapitas->check_cart();expect(count($GLOBALS['notices'])>$before,true,'Invalid cart blocked at checkout');

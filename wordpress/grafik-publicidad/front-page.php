@@ -10,6 +10,9 @@ get_header();
 
 $instagram = grafik_instagram_url();
 $instagram_shortcode = trim( (string) get_theme_mod( 'grafik_instagram_shortcode', '' ) );
+if ( ! $instagram_shortcode && shortcode_exists( 'instagram-feed' ) ) {
+	$instagram_shortcode = '[instagram-feed feed=1]';
+}
 
 ?>
 <main>

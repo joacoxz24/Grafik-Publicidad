@@ -1,5 +1,27 @@
 # Continuidad de Grafik Publicidad
 
+## Correcciones publicadas el 13 de septiembre de 2026
+
+- Hosting definitivo activo en `https://grafikpublicidad.cl`; WordPress permanece
+  físicamente en `/wp`, pero la tienda se sirve desde la raíz del dominio.
+- Configurador 1.3.0: archivos privados por artículo con metadata estructurada,
+  recuperación de pedidos anteriores, miniaturas y descargas autenticadas.
+- El pedido 29 se recuperó después de comprobar que WooCommerce recreó el artículo
+  del pedido con otro identificador durante la reanudación del checkout.
+- Flow Payment 3.0.8 conserva su configuración y checkout. El configurador adapta
+  sus callbacks para validar con Flow, serializar confirmaciones, usar
+  `payment_complete()` con la transacción y evitar duplicados o regresiones.
+- El fallo de correo era de entrega: WooCommerce sí disparó sus correos, pero Gmail
+  rechazó el remitente técnico del hosting por SPF/DKIM. Los nuevos envíos usan
+  `ventas@grafikpublicidad.cl`; una prueba posterior fue aceptada por cPanel y
+  recibida correctamente.
+- Tema 1.4.0: cotizaciones dirigidas a `ventas@grafikpublicidad.cl`, feed 1 de
+  Smash Balloon en portada y carrusel infinito cada 4 segundos sin botón Pausar.
+- Validación local: 58 pruebas de catálogo, 55 de archivos/Flow, 21 del límite del
+  callback de Flow, 36 de páginas de resultado y prueba de integración del tema.
+- GitHub respalda únicamente código. Base de datos, pedidos y `uploads` requieren
+  copias de seguridad separadas y no deben publicarse en el repositorio.
+
 ## Actualización del 13 de septiembre de 2026
 
 - Destapador llavero: precio mayorista actualizado a $860 desde 51 unidades;
@@ -7,7 +29,7 @@
 - Plugin 1.2.1: migración única del precio anterior de $750 en WooCommerce.
 - Verificadas 58 aserciones PHP y precios frontend en el límite 50/51.
 - Vista previa local reiniciada en http://localhost:5173/ (respuesta HTTP 200).
-- No se desplegó al hosting; sigue pendiente definir el hosting definitivo.
+- Este punto era histórico; el despliegue posterior está descrito arriba.
 - La comprobación TypeScript global encuentra tipos de Cloudflare ausentes
   en db/index.ts y worker/index.ts; no afecta a las pruebas de precios.
 

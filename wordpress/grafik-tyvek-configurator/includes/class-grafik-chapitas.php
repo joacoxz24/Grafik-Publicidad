@@ -174,7 +174,7 @@ final class Grafik_Chapitas {
 	public function order_item( WC_Order_Item_Product $item, string $key, array $values, WC_Order $order ): void {
 		if ( ! self::kind( (int) $values['product_id'] ) ) { return; }
 		foreach ( $this->item_data( array(), $values ) as $field ) { $item->add_meta_data( $field['key'], $field['value'], true ); }
-		$item->add_meta_data( '_grafik_files', wp_json_encode( $values['grafik_files'] ?? array() ), true );
+		$item->add_meta_data( '_grafik_files', wp_json_encode( Grafik_Order_Files::stage( $values['grafik_files'] ?? array() ) ), true );
 		$item->add_meta_data( '_grafik_item_uuid', $values['grafik_item_uuid'], true );
 	}
 	public function admin_fields(): void {

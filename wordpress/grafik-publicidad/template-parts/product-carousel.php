@@ -14,5 +14,5 @@ $slides = array(
 			<div class="hero-art"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/' . $slide['image'] ); ?>" alt="<?php echo esc_attr( $slide['alt'] ); ?>" width="1024" height="1024"></div>
 		</div>
 	<?php endforeach; ?>
-	<div class="carousel-controls" hidden><button type="button" data-prev aria-label="Producto anterior">←</button><button type="button" data-slide="0" aria-current="true">Pulseras Tyvek</button><button type="button" data-slide="1">Chapitas de 58 mm</button><button type="button" data-next aria-label="Producto siguiente">→</button><button type="button" data-pause aria-pressed="false">Pausar</button></div>
+	<div class="carousel-controls" hidden><button type="button" data-prev aria-label="Producto anterior">←</button><button type="button" data-slide="0" aria-current="true">Pulseras Tyvek</button><button type="button" data-slide="1">Chapitas de 58 mm</button><button type="button" data-next aria-label="Producto siguiente">→</button></div>
 </section>

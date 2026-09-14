@@ -7,7 +7,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.3.0' );
+define( 'GRAFIK_THEME_VERSION', '1.4.0' );
+define( 'GRAFIK_SALES_EMAIL', 'ventas@grafikpublicidad.cl' );
 
 function grafik_theme_setup(): void {
 	load_theme_textdomain( 'grafik-publicidad', get_template_directory() . '/languages' );
@@ -132,6 +133,15 @@ function grafik_theme_upgrade(): void {
 	}
 
 	grafik_create_catalog_pages();
+
+	// Completa los valores que quedaron vacíos al migrar el sitio al dominio definitivo.
+	if ( ! sanitize_email( get_theme_mod( 'grafik_contact_email', '' ) ) ) {
+		set_theme_mod( 'grafik_contact_email', GRAFIK_SALES_EMAIL );
+	}
+	if ( ! trim( (string) get_theme_mod( 'grafik_instagram_shortcode', '' ) ) ) {
+		set_theme_mod( 'grafik_instagram_shortcode', '[instagram-feed feed=1]' );
+	}
+
 	update_option( 'grafik_theme_db_version', GRAFIK_THEME_VERSION );
 	flush_rewrite_rules( false );
 }
@@ -156,7 +166,7 @@ function grafik_theme_customize( WP_Customize_Manager $customizer ): void {
 		),
 		'grafik_instagram_shortcode' => array(
 			'label'    => __( 'Shortcode del feed automático de Instagram', 'grafik-publicidad' ),
-			'default'  => '',
+			'default'  => '[instagram-feed feed=1]',
 			'sanitize' => 'sanitize_text_field',
 			'type'     => 'text',
 		),
@@ -168,7 +178,7 @@ function grafik_theme_customize( WP_Customize_Manager $customizer ): void {
 		),
 		'grafik_contact_email' => array(
 			'label'    => __( 'Correo que recibe las consultas', 'grafik-publicidad' ),
-			'default'  => get_option( 'admin_email' ),
+			'default'  => GRAFIK_SALES_EMAIL,
 			'sanitize' => 'sanitize_email',
 			'type'     => 'email',
 		),
@@ -296,7 +306,8 @@ function grafik_contact_submit(): void {
 		exit;
 	}
 
-	$to      = sanitize_email( get_theme_mod( 'grafik_contact_email', get_option( 'admin_email' ) ) );
+	$to      = sanitize_email( get_theme_mod( 'grafik_contact_email', GRAFIK_SALES_EMAIL ) );
+	$to      = $to ?: GRAFIK_SALES_EMAIL;
 	$subject = sprintf( 'Nueva consulta web de %s', $name );
 	$body    = implode(
 		"\n",
@@ -311,7 +322,10 @@ function grafik_contact_submit(): void {
 			$message,
 		)
 	);
-	$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+	$headers = array(
+		'From: Grafik Publicidad <' . GRAFIK_SALES_EMAIL . '>',
+		'Reply-To: ' . $name . ' <' . $email . '>',
+	);
 	$sent    = wp_mail( $to, $subject, $body, $headers );
 
 	wp_safe_redirect( add_query_arg( 'contacto', $sent ? 'enviado' : 'error', home_url( '/#contacto' ) ) );
