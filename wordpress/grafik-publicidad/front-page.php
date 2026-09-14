@@ -87,6 +87,7 @@ if ( ! $instagram_shortcode && shortcode_exists( 'instagram-feed' ) ) {
 		</div>
 		<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
 			<input type="hidden" name="action" value="grafik_contact">
+			<label class="grafik-form-trap" aria-hidden="true">Sitio web<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
 			<?php wp_nonce_field( 'grafik_contact', 'grafik_contact_nonce' ); ?>
 			<?php if ( isset( $_GET['contacto'] ) && 'enviado' === sanitize_key( wp_unslash( $_GET['contacto'] ) ) ) : ?>
 				<p class="grafik-form-success">Mensaje enviado. Te responderemos lo antes posible.</p>

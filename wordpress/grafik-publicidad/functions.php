@@ -7,8 +7,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.4.0' );
+define( 'GRAFIK_THEME_VERSION', '1.4.1' );
 define( 'GRAFIK_SALES_EMAIL', 'ventas@grafikpublicidad.cl' );
+require_once __DIR__ . '/inc/contact-security.php';
 
 function grafik_theme_setup(): void {
 	load_theme_textdomain( 'grafik-publicidad', get_template_directory() . '/languages' );
@@ -236,7 +237,7 @@ function grafik_logo_content(): void {
 		return;
 	}
 	?>
-	<i><span></span></i><span>Grafik <b>Publicidad</b></span>
+	<span class="grafik-official-logo"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/grafik-logo-white.png' ); ?>" alt="Grafik Publicidad" width="2000" height="2000" fetchpriority="high"></span>
 	<?php
 }
 
@@ -287,11 +288,16 @@ function grafik_checkout_intro(): void {
 add_action( 'woocommerce_before_checkout_form', 'grafik_checkout_intro', 5 );
 
 function grafik_contact_submit(): void {
+	if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
+		wp_die( 'Método no permitido.', '', array( 'response' => 405 ) );
+	}
+	$error = grafik_contact_input_error( $_POST );
+	if ( $error ) { wp_die( esc_html( $error ), '', array( 'response' => 400 ) ); }
 	if (
 		! isset( $_POST['grafik_contact_nonce'] ) ||
 		! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['grafik_contact_nonce'] ) ), 'grafik_contact' )
 	) {
-		wp_die( esc_html__( 'La sesión del formulario expiró. Vuelve a intentarlo.', 'grafik-publicidad' ), 403 );
+		wp_die( esc_html__( 'La sesión del formulario expiró. Vuelve a intentarlo.', 'grafik-publicidad' ), '', array( 'response' => 403 ) );
 	}
 
 	$name      = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
@@ -304,6 +310,9 @@ function grafik_contact_submit(): void {
 	if ( ! $name || ! is_email( $email ) || ! $message ) {
 		wp_safe_redirect( add_query_arg( 'contacto', 'error', home_url( '/#contacto' ) ) );
 		exit;
+	}
+	if ( ! grafik_contact_allow_request() ) {
+		wp_die( 'Ya recibimos una consulta reciente. Espera un minuto antes de volver a enviarla.', '', array( 'response' => 429 ) );
 	}
 
 	$to      = sanitize_email( get_theme_mod( 'grafik_contact_email', GRAFIK_SALES_EMAIL ) );

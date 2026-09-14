@@ -1,3 +1,7 @@
+## Entrega del 14 de septiembre de 2026
+
+Tema 1.4.1: logo oficial blanco en encabezado y checkout; validación y mitigación básica contra repetición de cotizaciones. Revisión pública y de código documentada en docs/REVISION-SEGURIDAD-2026-09-14.md. Pruebas: 180 comprobaciones PHP e integración del tema. Entrega por GitHub y ZIP; el usuario instala manualmente. No desplegar diseño al hosting salvo petición expresa. Plugin sigue en 1.3.0.
+
 # Continuidad de Grafik Publicidad
 
 ## Correcciones publicadas el 13 de septiembre de 2026

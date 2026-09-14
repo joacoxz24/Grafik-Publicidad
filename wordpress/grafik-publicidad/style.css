@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://odcpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.4.0
+Version: 1.4.1
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -238,3 +238,8 @@ body.admin-bar .header{top:32px}
 
 /* Resultados de compra: diseño adaptable, sin alterar las tablas de WooCommerce. */
 .grafik-result{max-width:1100px;margin:30px auto 70px}.grafik-result-card{padding:clamp(24px,5vw,56px);border:1px solid #334155;border-radius:24px;background:linear-gradient(140deg,#111827,#080d18);margin-bottom:32px}.grafik-result-icon{display:flex;width:64px;height:64px;align-items:center;justify-content:center;border:1px solid currentColor;border-radius:50%;font-size:32px;color:#fbbf24;margin-bottom:24px}.grafik-result-success .grafik-result-icon{color:#5eead4}.grafik-result-failed .grafik-result-icon{color:#fb7185}.grafik-result h1{font-size:clamp(30px,5vw,48px);line-height:1.12;margin:16px 0;overflow-wrap:anywhere}.grafik-result-card p{color:#cbd5e1;line-height:1.7;max-width:760px}.grafik-result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:22px;padding:24px 0;border-block:1px solid #334155;margin:28px 0}.grafik-result-summary dt{color:#94a3b8;font-size:13px}.grafik-result-summary dd{margin:8px 0 0;font-size:18px;font-weight:700;overflow-wrap:anywhere}.grafik-result-next h2{font-size:22px}.grafik-result-actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:28px}.grafik-result-link{color:#67e8f9;text-decoration:underline;text-underline-offset:4px}.grafik-result a:focus-visible{outline:3px solid #67e8f9;outline-offset:5px}.grafik-result .woocommerce-order-details,.grafik-result .woocommerce-customer-details{overflow-wrap:anywhere}@media(max-width:600px){.grafik-result-summary{grid-template-columns:1fr 1fr}.grafik-result-actions{align-items:stretch;flex-direction:column}.grafik-result-actions .cta{min-width:0}}
+
+/* Original logo: crop only transparent padding through layout. */
+.grafik-official-logo{position:relative;display:block;width:120px;aspect-ratio:1650/807;overflow:hidden;flex:none}
+.grafik-official-logo img{position:absolute;display:block;width:121.212122%;max-width:none;height:auto;left:-10.666667%;top:-66.418836%}
+.grafik-form-trap{position:absolute!important;left:-10000px!important;width:1px;height:1px;overflow:hidden}
