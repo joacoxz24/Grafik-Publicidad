@@ -1,3 +1,7 @@
+## Entrega de opciones de transporte — 14 de septiembre de 2026
+
+Plugin Grafik Configurador 1.3.1: retiro coordinado CONCEPCIÓN y selector obligatorio de Bluexpress, Chilexpress, Varmontt o Starken por pagar al elegir transporte. Guarda _grafik_shipping_carrier mediante WC CRUD y lo muestra en administración y correos. Pedidos antiguos sin selección muestran No especificado. No agrega tarifas ni conexiones con transportistas. 31 pruebas específicas de entrega y 58 de catálogo aprobadas. ZIP manual outputs/grafik-configurador-1.3.1.zip. Tema permanece 1.4.1.
+
 ## Entrega del 14 de septiembre de 2026
 
 Tema 1.4.1: logo oficial blanco en encabezado y checkout; validación y mitigación básica contra repetición de cotizaciones. Revisión pública y de código documentada en docs/REVISION-SEGURIDAD-2026-09-14.md. Pruebas: 180 comprobaciones PHP e integración del tema. Entrega por GitHub y ZIP; el usuario instala manualmente. No desplegar diseño al hosting salvo petición expresa. Plugin sigue en 1.3.0.
