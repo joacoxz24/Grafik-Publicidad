@@ -96,7 +96,11 @@ final class Grafik_Chapitas {
 		$initial = $rules['alfiler'];
 		ob_start(); ?>
 		<div class="product-grid grafik-chapitas" data-rules="<?php echo esc_attr( wp_json_encode( $rules ) ); ?>">
+			<?php if ( locate_template( 'template-parts/chapitas-gallery.php' ) ) : ?>
+				<?php get_template_part( 'template-parts/chapitas-gallery' ); ?>
+			<?php else : ?>
 			<div class="chapitas-photo"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/chapitas-catalogo.png' ); ?>" width="1024" height="1024" alt="Imagen referencial de chapitas alfiler y llavero" loading="lazy"><small>Imagen referencial de alfiler y llavero. El destapador llavero es una opción diferente.</small></div>
+			<?php endif; ?>
 			<form class="options grafik-chapitas-form" enctype="multipart/form-data" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
 				<input type="hidden" name="action" value="grafik_chapitas_add">
 				<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'grafik_chapitas_add' ) ); ?>">

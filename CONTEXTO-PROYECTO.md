@@ -1,3 +1,7 @@
+## Carrusel de chapitas — 27 de septiembre de 2026
+
+Tema 1.5.0 y plugin 1.3.2: galería configurable en Apariencia > Personalizar > Fotos de chapitas. Tres promocionales, luego seis reales; espacios vacíos e imágenes inválidas omitidos. Promocional original como respaldo; con una sola foto no se muestra navegación. Autoplay 4 segundos, flechas y gesto táctil, respeta reducción de movimiento y pausa temporal al interactuar. Faltan fotos nuevas del usuario: solo existe la promocional original. No inventar fotografías reales. Entrega manual de ambos ZIP, sin despliegue al hosting. Pruebas PHP de orden/fallback, catálogo y entrega, integración del tema y navegador local aprobadas.
+
 ## Entrega de opciones de transporte — 14 de septiembre de 2026
 
 Plugin Grafik Configurador 1.3.1: retiro coordinado CONCEPCIÓN y selector obligatorio de Bluexpress, Chilexpress, Varmontt o Starken por pagar al elegir transporte. Guarda _grafik_shipping_carrier mediante WC CRUD y lo muestra en administración y correos. Pedidos antiguos sin selección muestran No especificado. No agrega tarifas ni conexiones con transportistas. 31 pruebas específicas de entrega y 58 de catálogo aprobadas. ZIP manual outputs/grafik-configurador-1.3.1.zip. Tema permanece 1.4.1.
