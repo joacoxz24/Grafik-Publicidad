@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://odcpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.5.0
+Version: 1.6.0
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -245,3 +245,7 @@ body.admin-bar .header{top:32px}
 .grafik-form-trap{position:absolute!important;left:-10000px!important;width:1px;height:1px;overflow:hidden}
 
 .grafik-photo-gallery{align-self:start;min-width:0}.grafik-photo-slide{margin:0}.grafik-photo-slide[hidden],.grafik-photo-controls[hidden]{display:none}.grafik-photo-slide img{width:100%;aspect-ratio:1;object-fit:contain;background:#070b14}.grafik-photo-slide figcaption{padding:16px 24px;color:var(--muted);font-size:14px;line-height:1.6}.grafik-photo-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:0 20px 20px}.grafik-photo-controls button{width:44px;height:44px;border:1px solid var(--border);border-radius:50%;background:#101827;color:white;cursor:pointer}.grafik-photo-controls button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+.grafik-product-guide{margin-top:64px;padding-top:40px;border-top:1px solid var(--border);max-width:900px}.grafik-product-guide h2{font-size:clamp(26px,4vw,36px);line-height:1.2;margin-bottom:20px}.grafik-product-guide h3{margin-top:28px}.grafik-product-guide p{color:var(--muted);line-height:1.8;margin:16px 0}.grafik-product-guide a{color:var(--cyan);text-decoration:underline}.grafik-guide-questions details{border-bottom:1px solid var(--border);padding:18px 0}.grafik-guide-questions summary{cursor:pointer;font-weight:700;line-height:1.5}.grafik-guide-questions summary:focus-visible{outline:2px solid var(--cyan)}
+
+.grafik-home-intro{padding-block:40px 70px}.grafik-home-intro p{max-width:900px;line-height:1.8;color:var(--muted);margin:16px 0}.grafik-home-intro a{color:var(--cyan);text-decoration:underline}

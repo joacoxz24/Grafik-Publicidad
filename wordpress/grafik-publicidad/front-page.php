@@ -30,6 +30,11 @@ if ( ! $instagram_shortcode && shortcode_exists( 'instagram-feed' ) ) {
 		<?php get_template_part( 'template-parts/product-families' ); ?>
 	</section>
 
+	<section class="shell grafik-home-intro">
+		<div class="section-title"><span>Grafik Publicidad · Concepción</span><h2>Pulseras y chapitas personalizadas para tu evento</h2></div>
+		<p>Personaliza <a href="<?php echo esc_url( grafik_configurator_url( 'pulseras' ) ); ?>">pulseras Tyvek para eventos</a> o elige <a href="<?php echo esc_url( grafik_configurator_url( 'chapitas' ) ); ?>">chapitas con alfiler, llaveros y destapadores personalizados</a> para llevar el logo de tu empresa, agrupación o celebración.</p>
+		<p>Cotiza según formato y cantidad, adjunta tu diseño y revisa el total antes de comprar. Contamos con retiro coordinado en Concepción y envíos por pagar a todo Chile. Revisaremos tu diseño contigo antes de comenzar la producción.</p>
+	</section>
 	<section class="steps" id="comprar">
 		<div class="shell">
 			<div class="section-title">

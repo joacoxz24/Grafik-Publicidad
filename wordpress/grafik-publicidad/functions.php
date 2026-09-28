@@ -7,10 +7,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.5.0' );
+define( 'GRAFIK_THEME_VERSION', '1.6.0' );
 define( 'GRAFIK_SALES_EMAIL', 'ventas@grafikpublicidad.cl' );
 require_once __DIR__ . '/inc/contact-security.php';
 require_once __DIR__ . '/inc/chapitas-gallery.php';
+require_once __DIR__ . '/inc/seo.php';
 
 function grafik_theme_setup(): void {
 	load_theme_textdomain( 'grafik-publicidad', get_template_directory() . '/languages' );

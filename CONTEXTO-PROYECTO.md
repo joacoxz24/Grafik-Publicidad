@@ -1,3 +1,7 @@
+## SEO — 28 de septiembre de 2026
+
+Tema 1.6.0: títulos y metadescripciones por página, Organization en portada, contenido visible y preguntas frecuentes en familias, enlaces internos y contexto de Concepción. Compatibilidad con plugins SEO conocidos mediante cesión de metadatos. Guía docs/SEO-GOOGLE.md para Search Console, palabras iniciales y tareas externas. No hay datos de demanda/posiciones ni acceso a Search Console; no prometer resultados. Pruebas SEO (23), integración y sintaxis PHP aprobadas. ZIP manual outputs/grafik-tema-1.6.0.zip. Plugin permanece 1.3.2.
+
 ## Carrusel de chapitas — 27 de septiembre de 2026
 
 Tema 1.5.0 y plugin 1.3.2: galería configurable en Apariencia > Personalizar > Fotos de chapitas. Tres promocionales, luego seis reales; espacios vacíos e imágenes inválidas omitidos. Promocional original como respaldo; con una sola foto no se muestra navegación. Autoplay 4 segundos, flechas y gesto táctil, respeta reducción de movimiento y pausa temporal al interactuar. Faltan fotos nuevas del usuario: solo existe la promocional original. No inventar fotografías reales. Entrega manual de ambos ZIP, sin despliegue al hosting. Pruebas PHP de orden/fallback, catálogo y entrega, integración del tema y navegador local aprobadas.
