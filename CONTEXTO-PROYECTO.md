@@ -1,3 +1,7 @@
+## Preguntas frecuentes — 28 de septiembre de 2026
+
+Tema 1.6.1: despacho de la mayoría de pedidos entre 24 y 72 horas hábiles según cantidad; distingue traslado. Nueva pregunta Formas de pago (transferencia y tarjetas mediante Flow). Plantilla compartida por Chapitas y Pulseras. Entrega manual. Facturación en investigación: comprobante Flow puede sustituir boleta según modelo; no es factura. Pendiente conocer modelo SII y sistema de emisión del comercio; no se implementó selector ni emisión fiscal. Fuentes oficiales: https://web.flow.cl/es-cl/ayuda/ y https://www.sii.cl/destacados/boleta_electronica_voucher/ .
+
 ## SEO — 28 de septiembre de 2026
 
 Tema 1.6.0: títulos y metadescripciones por página, Organization en portada, contenido visible y preguntas frecuentes en familias, enlaces internos y contexto de Concepción. Compatibilidad con plugins SEO conocidos mediante cesión de metadatos. Guía docs/SEO-GOOGLE.md para Search Console, palabras iniciales y tareas externas. No hay datos de demanda/posiciones ni acceso a Search Console; no prometer resultados. Pruebas SEO (23), integración y sintaxis PHP aprobadas. ZIP manual outputs/grafik-tema-1.6.0.zip. Plugin permanece 1.3.2.
