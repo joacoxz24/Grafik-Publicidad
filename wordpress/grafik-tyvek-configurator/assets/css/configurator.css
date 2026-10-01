@@ -8,3 +8,12 @@
 .grafik-tyvek .grafik-add-to-cart:disabled{cursor:wait;filter:saturate(.5);opacity:.72}
 .grafik-unit-quantity{display:inline-flex;padding:9px 11px;border:1px solid rgba(255,255,255,.13);border-radius:8px;color:#f8fafc;background:#070b14;font-size:12px;font-weight:800;white-space:nowrap}
 .grafik-admin-files{margin-top:8px}.grafik-admin-files strong{margin-right:7px}
+.grafik-chapitas .chapita-bulk-progress{display:grid;gap:8px;margin-top:-8px}
+.grafik-chapitas .chapita-bulk-progress progress{display:block;width:100%;height:9px;border:0;border-radius:99px;background:#1a2940;overflow:hidden;accent-color:var(--cyan,#21d4e8)}
+.grafik-chapitas .chapita-bulk-progress progress::-webkit-progress-bar{border-radius:99px;background:#1a2940}
+.grafik-chapitas .chapita-bulk-progress progress::-webkit-progress-value{border-radius:99px;background:linear-gradient(90deg,var(--cyan,#21d4e8),#ffc72e);transition:width .22s ease}
+.grafik-chapitas .chapita-bulk-progress progress::-moz-progress-bar{border-radius:99px;background:linear-gradient(90deg,var(--cyan,#21d4e8),#ffc72e)}
+.grafik-chapitas .chapita-bulk-progress small{color:var(--muted,#c8d0dd);font-size:14px;line-height:1.5}
+.grafik-chapitas .price-card .chapita-saving{margin:2px 0 6px;color:#ffc72e;font-size:14px;font-weight:800}
+.grafik-chapitas .price-card .chapita-saving[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.grafik-chapitas .chapita-bulk-progress progress::-webkit-progress-value{transition:none}}

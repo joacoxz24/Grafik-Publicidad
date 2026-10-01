@@ -18,6 +18,18 @@
       root.querySelector('[data-bulk-price]').textContent = money(r.bulk) + ' c/u';
       root.querySelector('[data-unit-price]').textContent = money(price);
       root.querySelector('[data-total]').textContent = valid ? money(q * price) : 'Revisa la cantidad';
+      var progress = root.querySelector('[data-bulk-progress]');
+      var remaining = Math.max(0, r.threshold - q);
+      progress.max = Math.max(1, r.threshold - r.minimum);
+      progress.value = valid ? (q >= r.threshold ? progress.max : Math.min(progress.max, Math.max(0, q - r.minimum))) : 0;
+      root.querySelector('[data-bulk-message]').textContent = !valid
+        ? 'Ingresa una cantidad válida para calcular el precio por mayor.'
+        : remaining === 0 ? '¡Ya tienes el precio por mayor!'
+        : 'Agrega ' + remaining.toLocaleString('es-CL') + ' unidades para acceder al precio por mayor.';
+      var saving = root.querySelector('[data-bulk-saving]');
+      var saved = valid && q >= r.threshold ? Math.max(0, (r.price - r.bulk) * q) : 0;
+      saving.hidden = saved <= 0;
+      saving.textContent = saved > 0 ? 'Ahorras ' + money(saved) + ' en este pedido' : '';
       button.disabled = busy || !valid;
     }
     kind.addEventListener('change', function () { render(true); });

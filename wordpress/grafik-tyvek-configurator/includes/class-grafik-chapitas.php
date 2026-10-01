@@ -106,10 +106,14 @@ final class Grafik_Chapitas {
 				<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'grafik_chapitas_add' ) ); ?>">
 				<label class="option">Tipo de chapita<select name="kind"><?php foreach ( $rules as $kind => $rule ) : ?><option value="<?php echo esc_attr( $kind ); ?>"><?php echo esc_html( $rule['name'] ); ?></option><?php endforeach; ?></select></label>
 				<label class="option">Cantidad<input name="quantity" type="number" min="<?php echo esc_attr( $initial['minimum'] ); ?>" max="10000" step="1" value="<?php echo esc_attr( $initial['minimum'] ); ?>" required><small class="chapita-minimum">Mínimo <?php echo esc_html( $initial['minimum'] ); ?> unidades. Puedes aumentar de una en una.</small></label>
+				<div class="chapita-bulk-progress">
+					<progress data-bulk-progress min="0" max="<?php echo esc_attr( $initial['threshold'] - $initial['minimum'] ); ?>" value="0" aria-label="Progreso hacia el precio por mayor"></progress>
+					<small data-bulk-message>Agrega <?php echo esc_html( number_format_i18n( $initial['threshold'] - $initial['minimum'] ) ); ?> unidades para acceder al precio por mayor.</small>
+				</div>
 				<div class="chapita-tiers"><p><span data-regular-range></span><strong data-regular-price></strong></p><p><span data-bulk-range></span><strong data-bulk-price></strong></p></div>
 				<label class="option">Detalles de tus chapitas<textarea name="design_details" rows="4" maxlength="500" placeholder="Texto, colores, logo y detalles de tu diseño…"></textarea></label>
 				<label class="option">Logo o diseño de referencia<input name="grafik_files[]" type="file" accept=".png,.jpg,.jpeg,.pdf" multiple><small>PNG, JPG o PDF · máximo 3 archivos · 10 MB por archivo. El diámetro terminado es de 58 mm; revisaremos el diseño contigo.</small></label>
-				<div class="price-card" aria-live="polite"><div><span>Precio por unidad</span><strong data-unit-price></strong></div><div class="total"><span>Total</span><strong data-total></strong></div></div>
+				<div class="price-card" aria-live="polite"><div><span>Precio por unidad</span><strong data-unit-price></strong></div><p class="chapita-saving" data-bulk-saving hidden></p><div class="total"><span>Total</span><strong data-total></strong></div></div>
 				<button class="cta full" type="submit">Agregar al carrito <b aria-hidden="true">→</b></button><p class="chapita-message" role="status"></p>
 				<noscript>Activa JavaScript para cotizar y personalizar tus chapitas.</noscript>
 			</form>

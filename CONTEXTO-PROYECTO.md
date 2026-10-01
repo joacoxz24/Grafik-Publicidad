@@ -1,3 +1,7 @@
+## Progreso de precio por mayor de chapitas — 30 de septiembre de 2026
+
+Plugin Grafik Configurador 1.3.3: progreso visual desde mínimo hasta umbral por mayor para alfiler, llavero y destapador, con unidades restantes y estado alcanzado. Debajo del precio por unidad aparece el ahorro total del pedido solo después de alcanzar el umbral: (precio regular - precio mayorista) × cantidad. Usa las reglas activas de WooCommerce enviadas al frontend y conserva el cálculo de precio servidor existente. Pruebas de umbrales, formatos y reglas personalizadas aprobadas. Entrega mediante GitHub y ZIP manual; tema 1.7.0 sin cambios, hosting sin despliegue.
+
 ## Galería y precios de chapitas — 30 de septiembre de 2026
 
 Tema 1.7.0: fundido de 0,4 s con altura estable, miniaturas seleccionables y desplazables, controles minimalistas, carga previa de la imagen elegida y protección frente a clics rápidos. Mantiene autoplay de 4 s y preferencias de movimiento reducido. Gesto táctil solo en imagen principal para permitir desplazar miniaturas y hacer scroll vertical. Flecha SVG en selector de tipo. Rangos 24 px, precio regular 26/800, mayorista 28/900 amarillo #ffc72e; hasta 480 px se apilan conservando tamaños. Fotos y ajustes existentes se conservan. Solo ZIP del tema 1.7.0; plugin 1.3.2 no cambia. Pruebas reales de plantilla en Chromium, 320/390/750/1440, más PHP e integración aprobadas. No desplegado al hosting.
