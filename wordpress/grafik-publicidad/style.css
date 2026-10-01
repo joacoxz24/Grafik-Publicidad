@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://odcpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.6.1
+Version: 1.7.0
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -244,8 +244,33 @@ body.admin-bar .header{top:32px}
 .grafik-official-logo img{position:absolute;display:block;width:121.212122%;max-width:none;height:auto;left:-10.666667%;top:-66.418836%}
 .grafik-form-trap{position:absolute!important;left:-10000px!important;width:1px;height:1px;overflow:hidden}
 
-.grafik-photo-gallery{align-self:start;min-width:0}.grafik-photo-slide{margin:0}.grafik-photo-slide[hidden],.grafik-photo-controls[hidden]{display:none}.grafik-photo-slide img{width:100%;aspect-ratio:1;object-fit:contain;background:#070b14}.grafik-photo-slide figcaption{padding:16px 24px;color:var(--muted);font-size:14px;line-height:1.6}.grafik-photo-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:0 20px 20px}.grafik-photo-controls button{width:44px;height:44px;border:1px solid var(--border);border-radius:50%;background:#101827;color:white;cursor:pointer}.grafik-photo-controls button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
 
 .grafik-product-guide{margin-top:64px;padding-top:40px;border-top:1px solid var(--border);max-width:900px}.grafik-product-guide h2{font-size:clamp(26px,4vw,36px);line-height:1.2;margin-bottom:20px}.grafik-product-guide h3{margin-top:28px}.grafik-product-guide p{color:var(--muted);line-height:1.8;margin:16px 0}.grafik-product-guide a{color:var(--cyan);text-decoration:underline}.grafik-guide-questions details{border-bottom:1px solid var(--border);padding:18px 0}.grafik-guide-questions summary{cursor:pointer;font-weight:700;line-height:1.5}.grafik-guide-questions summary:focus-visible{outline:2px solid var(--cyan)}
 
 .grafik-home-intro{padding-block:40px 70px}.grafik-home-intro p{max-width:900px;line-height:1.8;color:var(--muted);margin:16px 0}.grafik-home-intro a{color:var(--cyan);text-decoration:underline}
+
+/* Product gallery: stacked frames keep height stable during the crossfade. */
+.grafik-photo-gallery{align-self:start;min-width:0}
+.grafik-photo-slide{margin:0;min-width:0}
+.grafik-photo-slide[hidden],.grafik-photo-controls[hidden]{display:none}
+.grafik-photo-slide img{width:100%;aspect-ratio:1;object-fit:contain;background:#070b14}
+.grafik-photo-slide figcaption{padding:14px 20px;color:var(--muted);font-size:14px;line-height:1.6}
+.is-enhanced .grafik-photo-stage{display:grid}
+.is-enhanced .grafik-photo-slide{grid-area:1/1;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .4s ease,visibility 0s linear .4s}
+.is-enhanced .grafik-photo-slide.is-active{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s;z-index:1}
+.grafik-photo-controls{display:flex;align-items:center;gap:8px;padding:4px 12px 16px;min-width:0}
+.grafik-photo-controls>button{flex:0 0 36px;width:36px;height:44px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:20px;cursor:pointer}
+.grafik-photo-controls>button:hover{color:white;background:#ffffff0a}
+.grafik-photo-thumbnails{display:flex;gap:8px;min-width:0;flex:1;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:thin;scrollbar-color:#46516a transparent}
+.grafik-photo-thumbnails button{flex:0 0 64px;width:64px;height:64px;padding:2px;border:2px solid transparent;border-radius:10px;background:#ffffff08;cursor:pointer;opacity:.65;transition:opacity .2s,border-color .2s}
+.grafik-photo-thumbnails button[aria-current="true"]{border-color:var(--cyan);opacity:1}
+.grafik-photo-thumbnails button:hover{opacity:1}
+.grafik-photo-thumbnails img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.grafik-photo-controls button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+#chapitas .grafik-chapitas-form select{appearance:none;-webkit-appearance:none;padding-right:46px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='m5 7 5 5 5-5' fill='none' stroke='%2321d4e8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:20px}
+#chapitas .chapita-tiers p{font-size:24px;line-height:1.35;align-items:center;column-gap:20px;row-gap:6px;margin:14px 0}
+#chapitas .chapita-tiers strong{font-size:26px;font-weight:800;white-space:nowrap}
+#chapitas .chapita-tiers [data-bulk-price]{font-size:28px;font-weight:900;color:#ffc72e}
+@media(max-width:480px){.grafik-photo-thumbnails button{flex-basis:56px;width:56px;height:56px}.grafik-photo-controls{gap:4px;padding-inline:8px}#chapitas .chapita-tiers p{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.is-enhanced .grafik-photo-slide,.grafik-photo-thumbnails button{transition:none}}

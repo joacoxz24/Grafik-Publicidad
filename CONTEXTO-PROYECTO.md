@@ -1,3 +1,7 @@
+## Galería y precios de chapitas — 30 de septiembre de 2026
+
+Tema 1.7.0: fundido de 0,4 s con altura estable, miniaturas seleccionables y desplazables, controles minimalistas, carga previa de la imagen elegida y protección frente a clics rápidos. Mantiene autoplay de 4 s y preferencias de movimiento reducido. Gesto táctil solo en imagen principal para permitir desplazar miniaturas y hacer scroll vertical. Flecha SVG en selector de tipo. Rangos 24 px, precio regular 26/800, mayorista 28/900 amarillo #ffc72e; hasta 480 px se apilan conservando tamaños. Fotos y ajustes existentes se conservan. Solo ZIP del tema 1.7.0; plugin 1.3.2 no cambia. Pruebas reales de plantilla en Chromium, 320/390/750/1440, más PHP e integración aprobadas. No desplegado al hosting.
+
 ## Preguntas frecuentes — 28 de septiembre de 2026
 
 Tema 1.6.1: despacho de la mayoría de pedidos entre 24 y 72 horas hábiles según cantidad; distingue traslado. Nueva pregunta Formas de pago (transferencia y tarjetas mediante Flow). Plantilla compartida por Chapitas y Pulseras. Entrega manual. Facturación en investigación: comprobante Flow puede sustituir boleta según modelo; no es factura. Pendiente conocer modelo SII y sistema de emisión del comercio; no se implementó selector ni emisión fiscal. Fuentes oficiales: https://web.flow.cl/es-cl/ayuda/ y https://www.sii.cl/destacados/boleta_electronica_voucher/ .
