@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador de Productos
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Pulseras Tyvek y chapitas publicitarias de 58 mm para WooCommerce, con archivos por diseño, descuentos y datos de despacho.
- * Version:           1.3.3
+ * Version:           1.3.4
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,12 +13,17 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.3.3' );
+define( 'GRAFIK_TYVEK_VERSION', '1.3.4' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
 
 final class Grafik_Tyvek_Configurator {
+	public const DELIVERY_LABELS = array(
+		'pickup'         => 'Retiro coordinado CONCEPCIÓN',
+		'pickup_linares' => 'Retiro LINARES',
+		'transport'      => 'Envío por transporte',
+	);
 	public const CARRIERS = array(
 		'bluexpress' => 'Bluexpress por pagar',
 		'chilexpress' => 'Chilexpress por pagar',
@@ -800,6 +805,11 @@ final class Grafik_Tyvek_Configurator {
 					<small>Coordinaremos contigo el lugar y horario.</small>
 				</label>
 				<label class="grafik-delivery-option">
+					<input type="radio" name="grafik_delivery_method" value="pickup_linares">
+					<strong>Retiro LINARES</strong>
+					<small>Coordinaremos contigo el lugar y horario.</small>
+				</label>
+				<label class="grafik-delivery-option">
 					<input type="radio" name="grafik_delivery_method" value="transport">
 					<strong>Envío por transporte</strong>
 					<small>Completa los datos necesarios para el despacho.</small>
@@ -850,7 +860,7 @@ final class Grafik_Tyvek_Configurator {
 
 	public function validate_delivery_fields(): void {
 		$method = isset( $_POST['grafik_delivery_method'] ) ? sanitize_key( wp_unslash( $_POST['grafik_delivery_method'] ) ) : 'pickup';
-		if ( ! in_array( $method, array( 'pickup', 'transport' ), true ) ) {
+		if ( ! isset( self::DELIVERY_LABELS[ $method ] ) ) {
 			wc_add_notice( 'Selecciona una forma de entrega válida.', 'error' );
 			return;
 		}
@@ -897,7 +907,7 @@ final class Grafik_Tyvek_Configurator {
 	public function admin_delivery_fields( WC_Order $order ): void {
 		$method = $order->get_meta( '_grafik_delivery_method', true );
 		echo '<div class="grafik-order-delivery"><h3>Entrega Grafik</h3>';
-		echo '<p><strong>Método:</strong> ' . esc_html( 'transport' === $method ? 'Envío por transporte' : 'Retiro coordinado CONCEPCIÓN' ) . '</p>';
+		echo '<p><strong>Método:</strong> ' . esc_html( self::DELIVERY_LABELS[ $method ] ?? self::DELIVERY_LABELS['pickup'] ) . '</p>';
 		if ( 'transport' === $method ) {
 			echo '<p><strong>Transporte:</strong> ' . esc_html( self::CARRIERS[ (string) $order->get_meta( '_grafik_shipping_carrier', true ) ] ?? 'No especificado' ) . '</p>';
 			echo '<p><strong>RUT:</strong> ' . esc_html( (string) $order->get_meta( '_grafik_shipping_rut', true ) ) . '<br>';
@@ -913,7 +923,7 @@ final class Grafik_Tyvek_Configurator {
 		$method = $order->get_meta( '_grafik_delivery_method', true );
 		$fields['grafik_delivery_method'] = array(
 			'label' => 'Entrega',
-			'value' => 'transport' === $method ? 'Envío por transporte' : 'Retiro coordinado CONCEPCIÓN',
+			'value' => self::DELIVERY_LABELS[ $method ] ?? self::DELIVERY_LABELS['pickup'],
 		);
 		if ( 'transport' === $method ) {
 			$fields['grafik_shipping_carrier'] = array( 'label' => 'Transporte', 'value' => self::CARRIERS[ (string) $order->get_meta( '_grafik_shipping_carrier', true ) ] ?? 'No especificado' );

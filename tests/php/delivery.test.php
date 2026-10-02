@@ -38,5 +38,13 @@ $_POST=['grafik_delivery_method'=>'pickup','grafik_shipping_carrier'=>'starken']
 $order=new WC_Order; $order->update_meta_data('_grafik_shipping_carrier','bluexpress');
 $plugin->validate_delivery_fields(); check(!$GLOBALS['notices']); $plugin->save_delivery_fields($order); check($order->get_meta('_grafik_shipping_carrier')==='');
 $email=$plugin->email_delivery_fields([],false,$order); check(!isset($email['grafik_shipping_carrier'])); check($email['grafik_delivery_method']['value']==='Retiro coordinado CONCEPCIÓN');
+$_POST=['grafik_delivery_method'=>'pickup_linares']; $GLOBALS['notices']=[];
+$order=new WC_Order; $order->update_meta_data('_grafik_shipping_carrier','bluexpress');
+$plugin->validate_delivery_fields(); check(!$GLOBALS['notices']); $plugin->save_delivery_fields($order);
+check($order->get_meta('_grafik_delivery_method')==='pickup_linares'); check($order->get_meta('_grafik_shipping_carrier')==='');
+$email=$plugin->email_delivery_fields([],false,$order); check($email['grafik_delivery_method']['value']==='Retiro LINARES'); check(!isset($email['grafik_shipping_carrier']));
+ob_start(); $plugin->admin_delivery_fields($order); check(str_contains(ob_get_clean(),'Retiro LINARES'));
+$_POST=['grafik_delivery_method'=>'invalid']; $GLOBALS['notices']=[];
+$plugin->validate_delivery_fields(); check(count($GLOBALS['notices'])===1);
 $order=new WC_Order; $order->update_meta_data('_grafik_delivery_method','transport'); check($plugin->email_delivery_fields([],true,$order)['grafik_shipping_carrier']['value']==='No especificado');
 echo "PASS: $checks delivery checks.\n";

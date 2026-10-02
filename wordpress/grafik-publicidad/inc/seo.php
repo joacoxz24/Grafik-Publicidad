@@ -8,13 +8,13 @@ function grafik_seo_external(): bool {
 
 function grafik_seo_page(): array {
 	if ( is_front_page() ) {
-		return array( 'title' => 'Pulseras y chapitas personalizadas | Grafik Publicidad', 'description' => 'Personaliza pulseras Tyvek, chapitas y llaveros para eventos y empresas. Retiro coordinado en Concepción y envíos por pagar a todo Chile.' );
+		return array( 'title' => 'Pulseras y chapitas personalizadas | Grafik Publicidad', 'description' => 'Personaliza pulseras Tyvek, chapitas y llaveros para eventos y empresas. Retiro coordinado en Concepción o Linares y envíos por pagar a todo Chile.' );
 	}
 	if ( is_page( 'pulseras' ) ) {
-		return array( 'title' => 'Pulseras Tyvek personalizadas para eventos | Grafik Publicidad', 'description' => 'Personaliza pulseras Tyvek con tu logo para eventos y control de acceso. Elige color y cantidad, adjunta tu diseño y coordina retiro en Concepción o envío.' );
+		return array( 'title' => 'Pulseras Tyvek personalizadas para eventos | Grafik Publicidad', 'description' => 'Personaliza pulseras Tyvek con tu logo para eventos y control de acceso. Elige color y cantidad, adjunta tu diseño y coordina retiro en Concepción o Linares, o pide envío.' );
 	}
 	if ( is_page( 'chapitas' ) ) {
-		return array( 'title' => 'Chapitas personalizadas de 58 mm y llaveros | Grafik Publicidad', 'description' => 'Chapitas de 58 mm con tu diseño: alfiler, llavero y destapador llavero. Cotiza según formato y cantidad. Retiro en Concepción y envíos por pagar a Chile.' );
+		return array( 'title' => 'Chapitas personalizadas de 58 mm y llaveros | Grafik Publicidad', 'description' => 'Chapitas de 58 mm con tu diseño: alfiler, llavero y destapador llavero. Cotiza según formato y cantidad. Retiro en Concepción o Linares y envíos por pagar a Chile.' );
 	}
 	if ( ( function_exists( 'is_shop' ) && is_shop() ) || is_page( 'productos' ) ) {
 		return array( 'title' => 'Productos personalizados para eventos | Grafik Publicidad', 'description' => 'Explora pulseras Tyvek, chapitas publicitarias y llaveros personalizados para marcas y eventos. Elige tu producto y personaliza tu pedido en línea.' );
