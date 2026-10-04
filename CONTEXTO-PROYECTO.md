@@ -125,3 +125,9 @@ guardados en WordPress, uploads ni configuraciones privadas del servidor.
 La migración necesita respaldar esos elementos por separado.
 No guardar credenciales ni datos de clientes en este repositorio.
 El plugin de Flow se mantiene por separado y no está incluido aquí.
+## SEO y compra por mayor — 4 de octubre de 2026
+
+Tema 1.7.4: título/descripción de Chapitas orientados a mayor y detalle; bloque comercial con diseño gratis, boleta/factura y cotización por Instagram, correo y web (información confirmada por el usuario); contenido por los tres formatos y preguntas de compras por volumen. Open Graph/Twitter Cards en las páginas administradas por el tema, conservando cesión a plugins SEO conocidos y canonical de WordPress. Precios, pagos y archivos sin cambios. Entrega en GitHub, sin despliegue al hosting.
+
+La conexión HTTP y navegador a /chapitas/ devolvieron 502 / conexión rechazada; no confirma caída pública. Search Console, datos orgánicos, versión instalada y checkout no verificados. La campaña Google Ads revisada antes estaba apta pero con 0 impresiones. Plan de prioridades y límites en docs/SEO-GOOGLE.md.
+
