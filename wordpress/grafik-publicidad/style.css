@@ -1,9 +1,9 @@
 /*
 Theme Name: Grafik Publicidad
-Theme URI: https://odcpublicidad.cl
+Theme URI: https://grafikpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.7.3
+Version: 1.7.4
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -284,3 +284,6 @@ body.admin-bar .header{top:32px}
 #chapitas .chapita-tiers [data-bulk-price]{font-size:28px;font-weight:900;color:#ffc72e}
 @media(max-width:480px){.grafik-photo-thumbnails button{flex-basis:56px;width:56px;height:56px}.grafik-photo-controls{gap:4px;padding-inline:8px}#chapitas .chapita-tiers p{flex-direction:column;align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.is-enhanced .grafik-photo-slide,.grafik-photo-thumbnails button{transition:none}}
+
+/* Commercial information beside the chapitas configurator. */
+.grafik-chapitas-benefits{margin:0 0 28px;padding:18px 22px;border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--muted);line-height:1.65}.grafik-chapitas-benefits p{margin:0}.grafik-chapitas-benefits p+p{margin-top:8px}.grafik-chapitas-benefits strong{color:var(--white)}.grafik-chapitas-benefits a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
