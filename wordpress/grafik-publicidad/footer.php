@@ -15,7 +15,7 @@ $checkout = function_exists( 'is_checkout' ) && is_checkout() && ! is_order_rece
 			<a class="logo" href="<?php echo esc_url( home_url( '/#inicio' ) ); ?>">
 				<i><span></span></i><span>Grafik <b>Publicidad</b></span>
 			</a>
-			<p><?php esc_html_e( 'Pulseras, chapitas y productos personalizados.', 'grafik-publicidad' ); ?></p>
+			<p><?php esc_html_e( 'Pulseras, chapitas y productos personalizados con entregas presenciales en Concepción y Linares, y envíos a todo Chile.', 'grafik-publicidad' ); ?></p>
 		</div>
 		<section class="grafik-footer-payments" aria-labelledby="grafik-footer-payments-title">
 			<h2 id="grafik-footer-payments-title">Métodos de pago</h2>

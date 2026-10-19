@@ -1,3 +1,7 @@
+## Diámetro, disponibilidad y cobertura — 19 de octubre de 2026
+
+Tema 1.8.2: título de Chapitas explicita 58 mm de diámetro y el pie menciona entregas presenciales en Concepción/Linares y envíos a todo Chile. Configurador 1.3.6: disponibilidad debajo del selector por modelo, obtenida de get_stock_status() de WooCommerce; En stock ✅, Sin stock o Disponible por encargo, sin afirmar disponibilidad si falta el producto. Se renderiza en PHP y cambia con el selector en JS. Validación servidor de compras existente conservada. Pruebas de estados por producto y de precios/progreso aprobadas. Entrega manual de ambos ZIP y respaldo en GitHub.
+
 ## Métodos de pago en el pie — 19 de octubre de 2026
 
 Tema 1.8.1: bloque Métodos de pago a la derecha del pie de página con variante oficial de Webpay para fondo oscuro (blanca, acentos rosados y endoso Transbank), tarjetas y transferencia bancaria. Marca/descripción a la izquierda; móvil apila los bloques. Archivo PNG oficial sin modificar, origen en assets/images/webpay-source.md. Vista previa y comprobación a 375/750/1440 px; el pie sigue oculto durante checkout y visible en pedido recibido. Solo cambia el tema; configurador permanece 1.3.5. Entrega manual ZIP y GitHub, sin despliegue al hosting.

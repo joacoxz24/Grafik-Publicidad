@@ -7,7 +7,10 @@ const assert=require('node:assert/strict');
  try {
   const page=await browser.newPage({viewport:{width:390,height:750}});
   const rules={alfiler:{minimum:10,price:500,threshold:101,bulk:400},llavero:{minimum:5,price:750,threshold:51,bulk:650},destapador:{minimum:5,price:950,threshold:51,bulk:860},custom:{minimum:25,price:1200,threshold:25,bulk:1000}};
-  await page.setContent(`<style>${fs.readFileSync('wordpress/grafik-publicidad/style.css','utf8')}</style><style>${fs.readFileSync('wordpress/grafik-tyvek-configurator/assets/css/configurator.css','utf8')}</style><main id="chapitas" style="padding:16px"><div class="grafik-chapitas" data-rules='${JSON.stringify(rules)}'><form class="options grafik-chapitas-form"><label class="option">Tipo de chapita<select name="kind">${Object.keys(rules).map(key=>`<option value="${key}">${key}</option>`).join('')}</select></label><label class="option">Cantidad<input name="quantity" type="number" value="10"><small class="chapita-minimum"></small></label><div class="chapita-bulk-progress"><progress data-bulk-progress></progress><small data-bulk-message></small></div><div class="chapita-tiers"><p><span data-regular-range></span><strong data-regular-price></strong></p><p><span data-bulk-range></span><strong data-bulk-price></strong></p></div><div class="price-card"><div><span>Precio por unidad</span><strong data-unit-price></strong></div><p data-bulk-saving class="chapita-saving" hidden></p><div class="total"><span>Total</span><strong data-total></strong></div></div><input type="file"><button type="submit">Agregar</button><p class="chapita-message"></p></form></div></main>`);
+  for(const rule of Object.values(rules)) Object.assign(rule,{stock_status:'instock',stock_label:'En stock ✅'});
+  Object.assign(rules.destapador,{stock_status:'outofstock',stock_label:'Sin stock'});
+  Object.assign(rules.custom,{stock_status:'onbackorder',stock_label:'Disponible por encargo'});
+  await page.setContent(`<style>${fs.readFileSync('wordpress/grafik-publicidad/style.css','utf8')}</style><style>${fs.readFileSync('wordpress/grafik-tyvek-configurator/assets/css/configurator.css','utf8')}</style><main id="chapitas" style="padding:16px"><div class="grafik-chapitas" data-rules='${JSON.stringify(rules)}'><form class="options grafik-chapitas-form"><label class="option">Tipo de chapita<select name="kind">${Object.keys(rules).map(key=>`<option value="${key}">${key}</option>`).join('')}</select><small class="chapita-stock" data-stock-status role="status"></small></label><label class="option">Cantidad<input name="quantity" type="number" value="10"><small class="chapita-minimum"></small></label><div class="chapita-bulk-progress"><progress data-bulk-progress></progress><small data-bulk-message></small></div><div class="chapita-tiers"><p><span data-regular-range></span><strong data-regular-price></strong></p><p><span data-bulk-range></span><strong data-bulk-price></strong></p></div><div class="price-card"><div><span>Precio por unidad</span><strong data-unit-price></strong></div><p data-bulk-saving class="chapita-saving" hidden></p><div class="total"><span>Total</span><strong data-total></strong></div></div><input type="file"><button type="submit">Agregar</button><p class="chapita-message"></p></form></div></main>`);
   await page.addScriptTag({content:fs.readFileSync('wordpress/grafik-tyvek-configurator/assets/js/chapitas.js','utf8')});
   async function check(kind,q,unit,total,save,remaining){
    await page.locator('select[name="kind"]').selectOption(kind);
@@ -27,12 +30,17 @@ const assert=require('node:assert/strict');
   await check('llavero',51,650,33150,5100,0);
   await check('destapador',51,860,43860,4590,0);
   await check('custom',25,1000,25000,5000,0);
+  for(const selected of ['alfiler','destapador','custom']){
+   await page.locator('select[name="kind"]').selectOption(selected);
+   assert.equal(await page.locator('[data-stock-status]').textContent(),rules[selected].stock_label);
+   assert.equal(await page.locator('[data-stock-status]').getAttribute('data-stock-state'),rules[selected].stock_status);
+  }
   await page.locator('input[name="quantity"]').fill('0');
   assert.match(await page.locator('[data-bulk-message]').textContent(),/cantidad válida/);
   assert(await page.locator('button[type="submit"]').isDisabled());
   await check('alfiler',101,400,40400,10100,0);
   await page.waitForTimeout(300);
   await page.screenshot({path:'outputs/chapitas-progress-mobile.png'});
-  console.log('PASS: 8 price thresholds, per-format savings, progress, invalid quantity and configured custom rule.');
+  console.log('PASS: 8 price thresholds, per-format savings, progress, invalid quantity, custom rule and per-format availability.');
  } finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

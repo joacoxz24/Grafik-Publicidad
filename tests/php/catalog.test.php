@@ -31,6 +31,7 @@ class WC_Product {
  public array $fields=[]; public float $price=0; public array $meta=[];
  public function set_price($price) { $this->price=(float)$price; }
  public function get_regular_price() { return $this->fields['regular_price']??500; }
+ public function get_stock_status() { return $this->fields['stock_status']??'instock'; }
  public function get_meta($key) { return $this->meta[$key]??''; }
  public function update_meta_data($key,$value) { $this->meta[$key]=$value; }
  public function get_id(){return $this->fields['id'];}
@@ -53,6 +54,14 @@ require __DIR__.'/../../wordpress/grafik-tyvek-configurator/includes/class-grafi
 $chapitas=new Grafik_Chapitas(); $tyvek=Grafik_Tyvek_Configurator::instance();
 $chapitas->setup(); expect(count($GLOBALS['products']),3,'Three products created');
 $chapitas->setup(); expect(count($GLOBALS['products']),3,'Setup is idempotent');
+$stockProduct=wc_get_product(Grafik_Chapitas::id('llavero'));
+foreach(['instock'=>'En stock ✅','outofstock'=>'Sin stock','onbackorder'=>'Disponible por encargo'] as $status=>$label) {
+ $stockProduct->fields['stock_status']=$status;
+ $stockRule=Grafik_Chapitas::rule('llavero');
+ expect($stockRule['stock_status'],$status,'Availability comes from WooCommerce');
+ expect($stockRule['stock_label'],$label,'Availability label matches product status');
+}
+$stockProduct->fields['stock_status']='instock';
 foreach ([['alfiler',10,500],['alfiler',100,500],['alfiler',101,400],['llavero',5,750],['llavero',50,750],['llavero',51,650],['destapador',5,950],['destapador',50,950],['destapador',51,860]] as [$kind,$q,$price]) {
  $rule=Grafik_Chapitas::rule($kind);
  expect(Grafik_Chapitas::unit_price($rule,$q),(float)$price,"Price $kind $q");

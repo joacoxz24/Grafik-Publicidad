@@ -2,6 +2,11 @@
 /** Chapitas de 58 mm: precios y cantidades siempre comprobados en servidor. */
 defined( 'ABSPATH' ) || exit;
 final class Grafik_Chapitas {
+	private const STOCK_LABELS = array(
+		'instock'     => 'En stock ✅',
+		'outofstock'  => 'Sin stock',
+		'onbackorder' => 'Disponible por encargo',
+	);
 	public const TYPES = array(
 		'alfiler' => array( 'name' => 'Chapita alfiler', 'minimum' => 10, 'price' => 500, 'threshold' => 101, 'bulk' => 400 ),
 		'llavero' => array( 'name' => 'Chapita llavero', 'minimum' => 5, 'price' => 750, 'threshold' => 51, 'bulk' => 650 ),
@@ -40,6 +45,8 @@ final class Grafik_Chapitas {
 				if ( $value > 0 ) { $rule[ $field ] = 'bulk' === $field ? $value : (int) $value; }
 			}
 		}
+		$rule['stock_status'] = $product ? (string) $product->get_stock_status() : '';
+		$rule['stock_label'] = self::STOCK_LABELS[ $rule['stock_status'] ] ?? 'Consulta disponibilidad';
 		return $rule;
 	}
 	public static function unit_price( array $rule, int $quantity ): float {
@@ -110,7 +117,7 @@ final class Grafik_Chapitas {
 			<form class="options grafik-chapitas-form" enctype="multipart/form-data" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
 				<input type="hidden" name="action" value="grafik_chapitas_add">
 				<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'grafik_chapitas_add' ) ); ?>">
-				<label class="option">Tipo de chapita<select name="kind"><?php foreach ( $rules as $kind => $rule ) : ?><option value="<?php echo esc_attr( $kind ); ?>"><?php echo esc_html( $rule['name'] ); ?></option><?php endforeach; ?></select></label>
+				<label class="option">Tipo de chapita<select name="kind"><?php foreach ( $rules as $kind => $rule ) : ?><option value="<?php echo esc_attr( $kind ); ?>"><?php echo esc_html( $rule['name'] ); ?></option><?php endforeach; ?></select><small class="chapita-stock" data-stock-status data-stock-state="<?php echo esc_attr( $initial['stock_status'] ); ?>" role="status"><?php echo esc_html( $initial['stock_label'] ); ?></small></label>
 				<label class="option">Cantidad<input name="quantity" type="number" min="<?php echo esc_attr( $initial['minimum'] ); ?>" max="10000" step="1" value="<?php echo esc_attr( $initial['minimum'] ); ?>" required><small class="chapita-minimum">Mínimo <?php echo esc_html( $initial['minimum'] ); ?> unidades. Puedes aumentar de una en una.</small></label>
 				<div class="chapita-bulk-progress">
 					<progress data-bulk-progress min="0" max="<?php echo esc_attr( $initial['threshold'] - $initial['minimum'] ); ?>" value="0" aria-label="Progreso hacia el precio por mayor"></progress>

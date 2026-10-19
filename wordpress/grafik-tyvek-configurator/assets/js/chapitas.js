@@ -7,6 +7,12 @@
     var busy = false;
     function render(changed) {
       var r = rules[kind.value], q = Number(quantity.value);
+      var stock = root.querySelector('[data-stock-status]');
+      if (stock) {
+        var stockLabel = r.stock_label || 'Consulta disponibilidad';
+        if (stock.textContent !== stockLabel) stock.textContent = stockLabel;
+        stock.dataset.stockState = r.stock_status || '';
+      }
       quantity.min = r.minimum;
       if (changed && (!Number.isInteger(q) || q < r.minimum)) { quantity.value = r.minimum; q = r.minimum; }
       var valid = Number.isInteger(q) && q >= r.minimum && q <= 10000;

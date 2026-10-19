@@ -16,4 +16,8 @@
 .grafik-chapitas .chapita-bulk-progress small{color:var(--muted,#c8d0dd);font-size:14px;line-height:1.5}
 .grafik-chapitas .price-card .chapita-saving{margin:2px 0 6px;color:#ffc72e;font-size:14px;font-weight:800}
 .grafik-chapitas .price-card .chapita-saving[hidden]{display:none}
+.grafik-chapitas .option .chapita-stock{font-size:14px;font-weight:700;line-height:1.5;color:var(--muted,#c8d0dd)}
+.grafik-chapitas .option .chapita-stock[data-stock-state="instock"]{color:#86efac}
+.grafik-chapitas .option .chapita-stock[data-stock-state="outofstock"]{color:#fda4af}
+.grafik-chapitas .option .chapita-stock[data-stock-state="onbackorder"]{color:#fcd34d}
 @media(prefers-reduced-motion:reduce){.grafik-chapitas .chapita-bulk-progress progress::-webkit-progress-value{transition:none}}

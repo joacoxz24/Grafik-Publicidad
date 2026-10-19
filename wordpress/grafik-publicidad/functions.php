@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_THEME_VERSION', '1.8.1' );
+define( 'GRAFIK_THEME_VERSION', '1.8.2' );
 define( 'GRAFIK_SALES_EMAIL', 'ventas@grafikpublicidad.cl' );
 require_once __DIR__ . '/inc/contact-security.php';
 require_once __DIR__ . '/inc/chapitas-gallery.php';
