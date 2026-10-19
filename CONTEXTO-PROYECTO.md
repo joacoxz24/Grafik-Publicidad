@@ -1,3 +1,7 @@
+## Métodos de pago en el pie — 19 de octubre de 2026
+
+Tema 1.8.1: bloque Métodos de pago a la derecha del pie de página con variante oficial de Webpay para fondo oscuro (blanca, acentos rosados y endoso Transbank), tarjetas y transferencia bancaria. Marca/descripción a la izquierda; móvil apila los bloques. Archivo PNG oficial sin modificar, origen en assets/images/webpay-source.md. Vista previa y comprobación a 375/750/1440 px; el pie sigue oculto durante checkout y visible en pedido recibido. Solo cambia el tema; configurador permanece 1.3.5. Entrega manual ZIP y GitHub, sin despliegue al hosting.
+
 ## Primera implementación tras OpenSEO — 19 de octubre de 2026
 
 Tema 1.8.0 y configurador 1.3.5 preparados para instalación manual. Se recuperó la base 1.7.4 del commit 495cb9d (propuesta separada), conservando textos comerciales y Open Graph/Twitter Cards. Productos añade guía de compra y corrige jerarquía de encabezados; portada conserva sus H3. Títulos de Pulseras/Chapitas más concisos y descripción de Pulseras ajustada. Las fichas internas redirigen 301 en GET/HEAD hacia su familia, manteniendo 302 para POST y sin afectar productos ajenos. Pruebas de metadatos, jerarquía, redirecciones, catálogo, entrega e integraciones y revisión visual a 375/750/1440 px.
