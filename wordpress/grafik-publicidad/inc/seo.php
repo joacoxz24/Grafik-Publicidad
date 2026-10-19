@@ -11,10 +11,10 @@ function grafik_seo_page(): array {
 		return array( 'title' => 'Pulseras y chapitas personalizadas | Grafik Publicidad', 'description' => 'Personaliza pulseras Tyvek, chapitas y llaveros para eventos y empresas. Retiro coordinado en Concepción o Linares y envíos por pagar a todo Chile.' );
 	}
 	if ( is_page( 'pulseras' ) ) {
-		return array( 'title' => 'Pulseras Tyvek personalizadas para eventos | Grafik Publicidad', 'description' => 'Personaliza pulseras Tyvek con tu logo para eventos y control de acceso. Elige color y cantidad, adjunta tu diseño y coordina retiro en Concepción o Linares, o pide envío.' );
+		return array( 'title' => 'Pulseras Tyvek personalizadas | Grafik Publicidad', 'description' => 'Pulseras Tyvek con tu logo para eventos y control de acceso. Cotiza en línea, retira en Concepción o Linares o pide despacho por pagar a todo Chile.' );
 	}
 	if ( is_page( 'chapitas' ) ) {
-		return array( 'title' => 'Chapitas personalizadas por mayor y al detalle | Grafik Publicidad', 'description' => 'Chapitas de 58 mm: alfiler, llavero y llavero destapador. Diseños gratis, venta por mayor y al detalle. Cotiza en línea y recibe en todo Chile.' );
+		return array( 'title' => 'Chapitas personalizadas por mayor | Grafik Publicidad', 'description' => 'Chapitas de 58 mm: alfiler, llavero y llavero destapador. Diseños gratis, venta por mayor y al detalle. Cotiza en línea y recibe en todo Chile.' );
 	}
 	if ( ( function_exists( 'is_shop' ) && is_shop() ) || is_page( 'productos' ) ) {
 		return array( 'title' => 'Productos personalizados para eventos | Grafik Publicidad', 'description' => 'Explora pulseras Tyvek, chapitas publicitarias y llaveros personalizados para marcas y eventos. Elige tu producto y personaliza tu pedido en línea.' );

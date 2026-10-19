@@ -15,9 +15,12 @@ get_header();
 			<h1>Productos personalizados</h1>
 			<p>Elige entre pulseras Tyvek y chapitas publicitarias. Personaliza tu diseño y cotiza al instante.</p>
 		</section>
-		<?php get_template_part( 'template-parts/product-families' ); ?>
+		<?php get_template_part( 'template-parts/product-families', null, array( 'heading_level' => 2 ) ); ?>
 
 	<?php endif; ?>
 	<?php woocommerce_content(); ?>
+	<?php if ( function_exists( 'is_shop' ) && is_shop() ) : ?>
+		<?php get_template_part( 'template-parts/catalog-guide' ); ?>
+	<?php endif; ?>
 </main>
 <?php get_footer(); ?>

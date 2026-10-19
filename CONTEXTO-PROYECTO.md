@@ -1,3 +1,9 @@
+## Primera implementación tras OpenSEO — 19 de octubre de 2026
+
+Tema 1.8.0 y configurador 1.3.5 preparados para instalación manual. Se recuperó la base 1.7.4 del commit 495cb9d (propuesta separada), conservando textos comerciales y Open Graph/Twitter Cards. Productos añade guía de compra y corrige jerarquía de encabezados; portada conserva sus H3. Títulos de Pulseras/Chapitas más concisos y descripción de Pulseras ajustada. Las fichas internas redirigen 301 en GET/HEAD hacia su familia, manteniendo 302 para POST y sin afectar productos ajenos. Pruebas de metadatos, jerarquía, redirecciones, catálogo, entrega e integraciones y revisión visual a 375/750/1440 px.
+
+OpenSEO instalado y OAuth autorizado en Codex; proyecto Grafik Publicidad, Chile/español. Auditoría 19/10: 17 URL, 44 observaciones, sin Lighthouse ni JS. Se reutiliza esa evidencia para esta implementación, sin nuevas consultas pagadas ni supuestas posiciones/volúmenes. Sitio publicado seguía en 1.7.4 durante la revisión; no se despliega desde este chat. Pendientes reales: limpiar contenido de ejemplo y revisar archivos sin uso en WordPress, conectar Search Console con autorización del propietario, medir caché/servidor y repetir auditoría después de instalar. Procedimiento en docs/SEO-GOOGLE.md. GitHub no respalda base de datos ni uploads.
+
 ## Progreso de precio por mayor de chapitas — 30 de septiembre de 2026
 
 Plugin Grafik Configurador 1.3.3: progreso visual desde mínimo hasta umbral por mayor para alfiler, llavero y destapador, con unidades restantes y estado alcanzado. Debajo del precio por unidad aparece el ahorro total del pedido solo después de alcanzar el umbral: (precio regular - precio mayorista) × cantidad. Usa las reglas activas de WooCommerce enviadas al frontend y conserva el cálculo de precio servidor existente. Pruebas de umbrales, formatos y reglas personalizadas aprobadas. Entrega mediante GitHub y ZIP manual; tema 1.7.0 sin cambios, hosting sin despliegue.

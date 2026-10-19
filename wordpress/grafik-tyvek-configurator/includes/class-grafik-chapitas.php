@@ -84,7 +84,13 @@ final class Grafik_Chapitas {
 		if ( ! is_product() ) { return; }
 		$id = get_queried_object_id();
 		$family = self::kind( $id ) ? 'chapitas' : ( $id === absint( get_option( 'grafik_tyvek_product_id' ) ) ? 'pulseras' : '' );
-		if ( $family && function_exists( 'grafik_configurator_url' ) ) { wp_safe_redirect( grafik_configurator_url( $family ) ); exit; }
+		if ( $family && function_exists( 'grafik_configurator_url' ) ) {
+			// Public product URLs permanently belong to their family configurator.
+			// Preserve the existing temporary redirect for form submissions.
+			$status = in_array( $_SERVER['REQUEST_METHOD'] ?? 'GET', array( 'GET', 'HEAD' ), true ) ? 301 : 302;
+			wp_safe_redirect( grafik_configurator_url( $family ), $status );
+			exit;
+		}
 	}
 	public function assets(): void {
 		wp_enqueue_script( 'grafik-chapitas', GRAFIK_TYVEK_URL . 'assets/js/chapitas.js', array( 'jquery' ), GRAFIK_TYVEK_VERSION, true );

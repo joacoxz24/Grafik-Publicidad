@@ -1,5 +1,42 @@
 # SEO de Grafik Publicidad — septiembre de 2026
 
+## Actualización 19/10/2026 — tema 1.8.0 y configurador 1.3.5
+
+Se recuperó la versión 1.7.4 del commit `495cb9db42961cde2c5513af244e2a5edae65daa`, que estaba en una propuesta separada de main. La página pública de Chapitas confirmó el tema 1.7.4 y sus metadatos comerciales. Esta entrega conserva ese contenido, las preguntas frecuentes, las galerías, el diseño gratis y las vistas previas al compartir enlaces.
+
+Cambios preparados para carga manual:
+
+- Productos añade una guía para elegir entre pulseras y los tres formatos de chapitas, personalizar, pagar y coordinar entrega. Usa datos ya confirmados por el propietario.
+- Las tarjetas del catálogo usan H2 después de su H1; la portada conserva H3 después de su encabezado de sección. Se mantienen las tarjetas y el catálogo de futuros productos antes de la guía.
+- Los títulos de Pulseras y Chapitas son más concisos. La descripción de Pulseras resume producto y entrega. Las etiquetas sociales reutilizan estos datos. Google puede adaptar los títulos y fragmentos; 60/160 caracteres son referencias editoriales del auditor, no límites obligatorios de Google ni factores suficientes para posicionar.
+- Las URL de los productos internos redirigen con 301 hacia su configurador en visitas GET/HEAD. Las solicitudes POST conservan el comportamiento temporal anterior. Los productos ajenos al configurador quedan fuera de esa regla.
+
+### Evidencia de OpenSEO y límites
+
+La auditoría de HTML del 19 de octubre recorrió 17 URL con un máximo de 50, sin Lighthouse ni renderizado JavaScript: 44 observaciones, 24 advertencias y 20 informativas. Detectó páginas de ejemplo, archivos sin contenido útil, poco contenido y salto de encabezados en Productos, y metadatos largos en páginas de producto. Carrito, cuenta y recuperación de contraseña ya emitían noindex; no deben indexarse para resolver avisos del auditor. El tiempo medio observado fue 1642 ms y es una medición de ese rastreo, no una prueba de causa del servidor ni de rendimiento móvil. No se midieron posiciones, demanda, visitas orgánicas ni conversiones, y Search Console no está conectado a OpenSEO.
+
+### Instalación y comprobación
+
+1. Guarda un respaldo del tema, del plugin y de la base de datos. En Apariencia → Temas → Añadir nuevo → Subir tema, carga `grafik-tema-1.8.0.zip` y reemplaza el tema instalado.
+2. En Plugins → Añadir nuevo → Subir plugin, carga `grafik-configurador-1.3.5.zip` y reemplaza Grafik Configurador de Productos. Este ZIP no corresponde al plugin externo de Flow.
+3. Limpia la caché existente. Comprueba Productos, Chapitas, Pulseras y el carrito. La vista previa de Google puede tardar en reflejar cambios.
+4. Comprueba que las cuatro URL `/producto/` del configurador respondan con 301 hacia `/chapitas/` o `/pulseras/`, y que el destino responda 200. No cambies las redirecciones de checkout, cuenta ni de la pasarela.
+
+### Limpieza pendiente en la base de datos de WordPress
+
+Esta entrega de código no borra contenido del sitio.
+
+1. En Páginas → Todas las páginas, abre “Sample Page” y confirma que sea la página de ejemplo. Si no tiene contenido propio necesario, muévela a la papelera (recuperable).
+2. En Entradas → Todas las entradas, revisa “Hello world!” y mueve a la papelera la entrada de ejemplo si no se usa.
+3. Revisa `/category/uncategorized/`, `/categoria-producto/sin-categorizar/` y los archivos de autor. No borres productos ni categorías con productos asignados. Organiza categorías reales según el catálogo y decide cuáles deben aparecer en Google; los archivos sin uso pueden excluirse del índice y del sitemap con la herramienta SEO elegida. No bloquearlos en robots.txt como sustituto de noindex.
+4. Abre el sitemap y repite el rastreo tras la limpieza para confirmar qué URL siguen publicadas. No redirigir páginas de ejemplo a la portada solo para ocultar avisos.
+
+### Medición siguiente
+
+Conectar la propiedad de `grafikpublicidad.cl` de Google Search Console desde las integraciones de OpenSEO requiere autorización del propietario de Google. Después revisar indexación/canonical de Chapitas, Pulseras y Productos y registrar clics e impresiones como referencia. Las mejoras del hosting y caché se investigan aparte; nunca cachear carrito, checkout, cuenta ni confirmaciones de pago.
+
+Fuentes: [redirecciones permanentes](https://developers.google.com/search/docs/crawling-indexing/301-redirects), [títulos](https://developers.google.com/search/docs/appearance/title-link), [fragmentos y descripciones](https://developers.google.com/search/docs/appearance/snippet).
+
 ## Actualización 04/10/2026 — tema 1.7.4
 
 Entrega de código, sin instalación en el hosting. La página Chapitas destaca venta por mayor y al detalle, diseño gratis, boleta o factura (datos proporcionados por el propietario), cotización por Instagram, correo y formulario. Se agregan descripciones diferenciadas de alfiler, llavero y llavero destapador, contenido para empresas/revendedores y respuestas sobre diseño, compra por volumen y facturación. No cambia mínimos, precios, archivos ni pagos. No promete una fecha universal de entrega.

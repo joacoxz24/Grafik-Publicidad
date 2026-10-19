@@ -10,6 +10,9 @@ function is_shop(){return $GLOBALS['page']==='shop';}
 function is_paged(){return false;}
 function home_url($path){return 'https://example.test'.$path;}
 function grafik_instagram_url(){return 'https://www.instagram.com/grafikpublicidad.cl';}
+function grafik_products_url(){return home_url('/productos/');}
+function get_permalink(){return home_url('/'.$GLOBALS['page'].'/');}
+function get_template_directory_uri(){return home_url('/wp/wp-content/themes/grafik-publicidad');}
 function esc_attr($s){return htmlspecialchars($s,ENT_QUOTES);}
 function wp_json_encode($s,$flags){return json_encode($s,$flags);}
 require __DIR__.'/../../wordpress/grafik-publicidad/inc/seo.php';
@@ -20,6 +23,9 @@ foreach(['home','pulseras','chapitas','shop'] as $page){
  $data=grafik_seo_page();check(!empty($data['description']));$descriptions[]=$data['description'];
  $title=$hooks['document_title_parts'](['title'=>'Original','site'=>'Site','page'=>'2']);check(!isset($title['site'])&&$title['page']==='2');
  ob_start();$hooks['wp_head']();$out=ob_get_clean();check(substr_count($out,'name="description"')===1);
+ check(str_contains($out,'property="og:title" content="'.esc_attr($data['title']).'"'));
+ check(str_contains($out,'name="twitter:description" content="'.esc_attr($data['description']).'"'));
+ check(str_contains($out,'property="og:url" content="'.($page==='home'?home_url('/') : ($page==='shop'?grafik_products_url():get_permalink())).'"'));
  if($page==='home'){preg_match('~<script[^>]*>(.*?)</script>~s',$out,$match);check(json_decode($match[1],true)['@type']==='Organization');}else{check(!str_contains($out,'application/ld+json'));}
 }
 check(count(array_unique($descriptions))===4);
