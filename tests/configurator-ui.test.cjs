@@ -39,6 +39,17 @@ const file=(name='logo.png',buffer=png)=>({name,mimeType:'image/png',buffer});
    }
   }
   const input=page.locator('input[type="file"]');
+  const amount=async selector=>Number((await page.locator(selector).textContent()).replace(/\D/g,''));
+  for(const [kind,regular,bulk,threshold] of [['alfiler',500,400,101],['llavero',750,650,51],['destapador',950,860,51]]){
+   await page.locator('select[name="kind"]').selectOption(kind);
+   assert.equal(await amount('[data-regular-before]'),regular+100);
+   assert.equal(await amount('[data-bulk-before]'),bulk+100);
+   assert.equal(await amount('[data-regular-price]'),regular);
+   assert.equal(await amount('[data-bulk-price]'),bulk);
+   await page.locator('input[name="quantity"]').fill(String(threshold));
+   assert.equal(await amount('[data-total]'),threshold*bulk);
+   assert.equal(await page.locator('.chapita-offer-badge').count(),2);
+  }
   const chooserPromise=page.waitForEvent('filechooser');
   await page.locator('.grafik-upload-zone').click();
   await (await chooserPromise).setFiles([file('logo-cliente.png')]);

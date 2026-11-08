@@ -155,3 +155,7 @@ El carrito del encabezado utiliza un SVG y un botón de 52 px. La regla móvil q
 
 Validación local: plantillas PHP reales a 320, 390, 750, 989 y 1440 px; selector nativo de archivos, límites, nombres seguros, foco de teclado, tarjetas y totales. También pasan catálogo (64 comprobaciones), archivos/Flow (55), progreso por mayor e integraciones del tema. Entrega mediante GitHub y ZIP separados de tema/plugin para instalación manual; sin despliegue al hosting ni comprobación de compra real en producción.
 
+### Oferta visual en Chapitas — 8 de noviembre de 2026
+
+Tema 1.9.1 y configurador 1.3.8. Por solicitud del propietario, ambas tarjetas muestran «OFERTA» en rojo, precio anterior tachado calculado como precio actual + $100 y «Ahorras $100 por unidad». Los valores de referencia cambian con el modelo elegido. Son referencias promocionales indicadas por el propietario, no un historial de precios verificado. No se alteran precios de WooCommerce, totales, umbrales ni el ahorro por volumen, que continúa calculándose por separado. Sin plazos promocionales ni escasez inventados. Prueba de los tres modelos y sus seis referencias, totales y diseño en cinco anchos; entrega manual por ZIP y GitHub.
+

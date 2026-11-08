@@ -124,8 +124,8 @@ final class Grafik_Chapitas {
 					<small data-bulk-message>Agrega <?php echo esc_html( number_format_i18n( $initial['threshold'] - $initial['minimum'] ) ); ?> unidades para acceder al precio por mayor.</small>
 				</div>
 				<div class="chapita-tiers" role="group" aria-label="Precios por cantidad">
-					<p class="chapita-tier chapita-tier-regular" data-tier="regular"><span class="chapita-tier-label">Por menor</span><span data-regular-range></span><strong><span data-regular-price></span><small>c/u</small></strong></p>
-					<p class="chapita-tier chapita-tier-bulk" data-tier="bulk"><span class="chapita-tier-label">Por mayor</span><span data-bulk-range></span><strong><span data-bulk-price></span><small>c/u</small></strong></p>
+					<p class="chapita-tier chapita-tier-regular" data-tier="regular"><span class="chapita-offer-badge">OFERTA</span><span class="chapita-tier-label">Por menor</span><span data-regular-range></span><span class="chapita-before">Antes <s data-regular-before></s> c/u</span><strong><span data-regular-price></span><small>c/u</small></strong><span class="chapita-offer-saving">Ahorras $100 por unidad</span></p>
+					<p class="chapita-tier chapita-tier-bulk" data-tier="bulk"><span class="chapita-offer-badge">OFERTA</span><span class="chapita-tier-label">Por mayor</span><span data-bulk-range></span><span class="chapita-before">Antes <s data-bulk-before></s> c/u</span><strong><span data-bulk-price></span><small>c/u</small></strong><span class="chapita-offer-saving">Ahorras $100 por unidad</span></p>
 				</div>
 				<label class="option">Detalles de tus chapitas<textarea name="design_details" rows="4" maxlength="500" placeholder="Texto, colores, logo y detalles de tu diseño…"></textarea></label>
 				<label class="option grafik-upload-field"><span>Tu logo o diseño</span><span class="grafik-upload-zone">

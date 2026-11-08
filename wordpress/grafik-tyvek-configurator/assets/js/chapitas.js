@@ -23,6 +23,9 @@
       root.querySelector('[data-regular-price]').textContent = money(r.price) + (regularCard ? '' : ' c/u');
       root.querySelector('[data-bulk-range]').textContent = 'Desde ' + r.threshold + ' unidades';
       root.querySelector('[data-bulk-price]').textContent = money(r.bulk) + (bulkCard ? '' : ' c/u');
+      var regularBefore = root.querySelector('[data-regular-before]'), bulkBefore = root.querySelector('[data-bulk-before]');
+      if (regularBefore) regularBefore.textContent = money(Number(r.price) + 100);
+      if (bulkBefore) bulkBefore.textContent = money(Number(r.bulk) + 100);
       if (regularCard) regularCard.dataset.active = String(valid && q < r.threshold);
       if (bulkCard) bulkCard.dataset.active = String(valid && q >= r.threshold);
       root.querySelector('[data-unit-price]').textContent = money(price);
