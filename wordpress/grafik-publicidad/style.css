@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://grafikpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.8.2
+Version: 1.9.0
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -114,8 +114,11 @@ Text Domain: grafik-publicidad
 
 /* Integración WordPress y WooCommerce */
 body.admin-bar .header{top:32px}
-.grafik-cart-link{position:relative;width:43px;height:43px;display:grid;place-items:center;border:1px solid var(--border);border-radius:50%;background:transparent;font-size:23px}
-.grafik-cart-link b{position:absolute;top:-6px;right:-5px;min-width:20px;height:20px;padding:3px;border-radius:15px;background:var(--pink);font-size:10px;text-align:center}
+.header-actions>.grafik-cart-link{position:relative;width:52px;height:52px;flex-shrink:0;display:grid;place-items:center;border:1px solid #ffffff38;border-radius:50%;background:#ffffff06;color:var(--white);transition:border-color .2s,background .2s}
+.header-actions>.grafik-cart-link:hover{border-color:var(--cyan);background:#21d4e810;color:var(--white)}
+.grafik-cart-link:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
+.grafik-cart-icon{display:block;width:27px;height:27px}
+.grafik-cart-link b{position:absolute;top:-5px;right:-5px;min-width:22px;height:22px;padding:0 5px;display:grid;place-items:center;border-radius:15px;background:var(--pink);color:#fff;font-size:11px;line-height:1;text-align:center}
 .grafik-plugin-required{padding:28px;border:1px solid #f6b73c55;border-radius:18px;color:#ffe4a6;background:#f6b73c0c}
 .grafik-form-success,.grafik-form-error{margin:0;padding:13px 15px;border-radius:10px;font-weight:700}
 .grafik-form-success{color:#baf8dc;background:#1d9b641f}.grafik-form-error{color:#ffbdcb;background:#f02d9b1b}
@@ -291,3 +294,17 @@ body.admin-bar .header{top:32px}
 
 .grafik-catalog-guide{max-width:none}.grafik-catalog-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 36px}.grafik-catalog-guide-grid h3{margin-top:16px}
 @media(max-width:700px){.grafik-catalog-guide-grid{grid-template-columns:1fr}}
+
+/* Two price cards, adapting to the available form width rather than the viewport. */
+#chapitas .chapita-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:12px}
+#chapitas .chapita-tiers .chapita-tier{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:10px;min-width:0;margin:0;padding:18px 16px;border:1px solid #ffffff20;border-radius:14px;background:#080f1d;transition:border-color .2s,background .2s}
+#chapitas .chapita-tiers .chapita-tier-label{font-size:11px;line-height:1.4;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#aab7ca}
+#chapitas .chapita-tiers [data-regular-range],#chapitas .chapita-tiers [data-bulk-range]{font-size:14px;line-height:1.5;font-weight:500;color:var(--muted)}
+#chapitas .chapita-tiers .chapita-tier strong{display:flex;align-items:baseline;gap:6px;margin-top:auto;font-size:26px;font-weight:800;line-height:1.25;color:var(--cyan);white-space:nowrap}
+#chapitas .chapita-tiers .chapita-tier strong small{font-size:12px;line-height:1.4;font-weight:500;color:#aab7ca}
+#chapitas .chapita-tiers .chapita-tier-bulk{border-color:#ffc72e45;background:linear-gradient(140deg,#ffc72e0c,#0b101b)}
+#chapitas .chapita-tiers .chapita-tier-bulk .chapita-tier-label{color:#e3c66d}
+#chapitas .chapita-tiers .chapita-tier-bulk strong{font-size:28px;font-weight:900;color:#ffc72e}
+#chapitas .chapita-tiers .chapita-tier[data-active="true"]{border-color:var(--cyan);background:#21d4e80b}
+#chapitas .chapita-tiers .chapita-tier-bulk[data-active="true"]{border-color:#ffc72e;background:#ffc72e10}
+@media(prefers-reduced-motion:reduce){.grafik-cart-link,#chapitas .chapita-tiers .chapita-tier{transition:none}}

@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador de Productos
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Pulseras Tyvek y chapitas publicitarias de 58 mm para WooCommerce, con archivos por diseño, descuentos y datos de despacho.
- * Version:           1.3.6
+ * Version:           1.3.7
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.3.6' );
+define( 'GRAFIK_TYVEK_VERSION', '1.3.7' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
@@ -462,11 +462,11 @@ final class Grafik_Tyvek_Configurator {
 				</div>
 
 				<div class="option">
-					<label>Logo o diseño de referencia</label>
-					<label class="upload">
-						<b>↑</b>
+					<label>Tu logo o diseño</label>
+					<label class="upload grafik-upload-zone">
+						<svg class="grafik-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16V3m-4 4 4-4 4 4M4 15v6h16v-6"/></svg>
 						<strong class="grafik-upload-label">Selecciona tus archivos</strong>
-						<small>PNG, JPG o PDF · máximo 3 archivos</small>
+						<small>PNG, JPG o PDF · máximo 3 archivos · 10 MB por archivo</small>
 						<input class="grafik-files" type="file" name="grafik_files[]" accept=".png,.jpg,.jpeg,.pdf" multiple>
 					</label>
 					<ul class="file-list grafik-file-list" hidden></ul>

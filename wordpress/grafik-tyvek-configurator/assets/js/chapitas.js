@@ -19,9 +19,12 @@
       var price = q >= r.threshold ? r.bulk : r.price;
       root.querySelector('.chapita-minimum').textContent = 'Mínimo ' + r.minimum + ' unidades. Puedes aumentar de una en una.';
       root.querySelector('[data-regular-range]').textContent = r.minimum + ' a ' + (r.threshold - 1) + ' unidades';
-      root.querySelector('[data-regular-price]').textContent = money(r.price) + ' c/u';
+      var regularCard = root.querySelector('[data-tier="regular"]'), bulkCard = root.querySelector('[data-tier="bulk"]');
+      root.querySelector('[data-regular-price]').textContent = money(r.price) + (regularCard ? '' : ' c/u');
       root.querySelector('[data-bulk-range]').textContent = 'Desde ' + r.threshold + ' unidades';
-      root.querySelector('[data-bulk-price]').textContent = money(r.bulk) + ' c/u';
+      root.querySelector('[data-bulk-price]').textContent = money(r.bulk) + (bulkCard ? '' : ' c/u');
+      if (regularCard) regularCard.dataset.active = String(valid && q < r.threshold);
+      if (bulkCard) bulkCard.dataset.active = String(valid && q >= r.threshold);
       root.querySelector('[data-unit-price]').textContent = money(price);
       root.querySelector('[data-total]').textContent = valid ? money(q * price) : 'Revisa la cantidad';
       var progress = root.querySelector('[data-bulk-progress]');
@@ -42,7 +45,12 @@
     quantity.addEventListener('input', function () { render(false); });
     form.querySelector('input[type="file"]').addEventListener('change', function (event) {
       var files = Array.from(event.target.files || []);
-      event.target.setCustomValidity(files.length > 3 || files.some(function (f) { return f.size > 10485760 || !/\.(png|jpe?g|pdf)$/i.test(f.name); }) ? 'Selecciona hasta 3 archivos PNG, JPG o PDF, de máximo 10 MB cada uno.' : '');
+      var error = files.length > 3 || files.some(function (f) { return f.size > 10485760 || !/\.(png|jpe?g|pdf)$/i.test(f.name); }) ? 'Selecciona hasta 3 archivos PNG, JPG o PDF, de máximo 10 MB cada uno.' : '';
+      event.target.setCustomValidity(error);
+      var zone = event.target.closest('.grafik-upload-zone'), label = form.querySelector('[data-upload-label]'), feedback = form.querySelector('[data-upload-feedback]');
+      if (zone) { zone.classList.toggle('has-error', !!error); zone.classList.toggle('has-files', !error && files.length > 0); }
+      if (label) label.textContent = !error && files.length ? files.length + (files.length === 1 ? ' archivo seleccionado' : ' archivos seleccionados') : 'Selecciona tus archivos';
+      if (feedback) { feedback.hidden = !error && files.length === 0; feedback.textContent = error || files.map(function (file) { return file.name; }).join(' · '); }
     });
     form.addEventListener('submit', async function (event) {
       event.preventDefault(); if (busy || !form.reportValidity()) return;

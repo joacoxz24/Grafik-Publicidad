@@ -21,3 +21,15 @@
 .grafik-chapitas .option .chapita-stock[data-stock-state="outofstock"]{color:#fda4af}
 .grafik-chapitas .option .chapita-stock[data-stock-state="onbackorder"]{color:#fcd34d}
 @media(prefers-reduced-motion:reduce){.grafik-chapitas .chapita-bulk-progress progress::-webkit-progress-value{transition:none}}
+.grafik-chapitas .grafik-upload-zone,.grafik-tyvek .upload.grafik-upload-zone{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:156px;margin:0;padding:26px 18px;border:1px dashed #21d4e86b;border-radius:14px;background:#21d4e808;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+:is(.grafik-chapitas,.grafik-tyvek) .grafik-upload-zone:hover{border-color:#21d4e8;background:#21d4e810}
+.grafik-upload-zone:focus-within{outline:3px solid var(--cyan,#21d4e8);outline-offset:4px}
+.grafik-upload-icon{display:block;width:30px;height:30px;color:var(--cyan,#21d4e8);flex-shrink:0}
+.grafik-upload-zone strong{font-size:15px;font-weight:700;line-height:1.5;color:#c7f7fc}
+#chapitas .grafik-upload-zone small,.grafik-tyvek .grafik-upload-zone small{max-width:280px;color:#a9b7cb;font-size:12px;line-height:1.65;font-weight:400}
+#chapitas .grafik-upload-zone>input[type="file"],.grafik-tyvek .grafik-upload-zone>input[type="file"]{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;border:0;opacity:0;cursor:pointer}
+:is(.grafik-chapitas,.grafik-tyvek) .grafik-upload-zone.has-files{border-color:#86efac;background:#86efac08}
+:is(.grafik-chapitas,.grafik-tyvek) .grafik-upload-zone.has-error{border-color:#fda4af;background:#fda4af08}
+#chapitas .grafik-upload-feedback{font-size:13px;line-height:1.6;overflow-wrap:anywhere;color:var(--muted,#c8d0dd)}
+#chapitas .grafik-upload-feedback[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.grafik-upload-zone{transition:none}}

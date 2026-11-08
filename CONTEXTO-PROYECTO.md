@@ -145,3 +145,13 @@ Tema 1.7.4: título/descripción de Chapitas orientados a mayor y detalle; bloqu
 
 La conexión HTTP y navegador a /chapitas/ devolvieron 502 / conexión rechazada; no confirma caída pública. Search Console, datos orgánicos, versión instalada y checkout no verificados. La campaña Google Ads revisada antes estaba apta pero con 0 impresiones. Plan de prioridades y límites en docs/SEO-GOOGLE.md.
 
+## Tema negro: precios, archivos y carrito — 8 de noviembre de 2026
+
+Tema 1.9.0 y configurador 1.3.7. Se mantiene el tema negro. Chapitas presenta tarjetas separadas de precio por menor y por mayor, resaltando la tarifa aplicable según la cantidad. La cuadrícula se adapta al ancho disponible del formulario y se apila cuando no caben dos tarjetas. Se conservan precios, progreso y ahorro existentes.
+
+Chapitas y Pulseras incorporan el recuadro «Tu logo o diseño», con icono de subida, selector nativo accesible y nombres de archivos seleccionados. Se mantienen los campos originales del formulario, tipos PNG/JPG/PDF, máximo tres archivos y 10 MB por archivo; no se modifica el almacenamiento de archivos de pedidos.
+
+El carrito del encabezado utiliza un SVG y un botón de 52 px. La regla móvil que ocultaba todos los enlaces de acciones ya no oculta el carrito, gracias a su selector específico. Se conserva el contador de WooCommerce.
+
+Validación local: plantillas PHP reales a 320, 390, 750, 989 y 1440 px; selector nativo de archivos, límites, nombres seguros, foco de teclado, tarjetas y totales. También pasan catálogo (64 comprobaciones), archivos/Flow (55), progreso por mayor e integraciones del tema. Entrega mediante GitHub y ZIP separados de tema/plugin para instalación manual; sin despliegue al hosting ni comprobación de compra real en producción.
+

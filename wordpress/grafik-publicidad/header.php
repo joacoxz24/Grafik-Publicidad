@@ -43,7 +43,7 @@ $count    = function_exists( 'WC' ) && WC()->cart ? WC()->cart->get_cart_content
 		<div class="header-actions">
 			<a href="<?php echo esc_url( grafik_instagram_url() ); ?>" target="_blank" rel="noopener">Instagram</a>
 			<a class="grafik-cart-link" href="<?php echo esc_url( $cart_url ); ?>" aria-label="<?php esc_attr_e( 'Ver carrito', 'grafik-publicidad' ); ?>">
-				<span aria-hidden="true">◫</span>
+				<svg class="grafik-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3h2l2.4 11.4A2 2 0 0 0 9.4 16H18a2 2 0 0 0 2-1.6L21 7H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg>
 				<b class="grafik-cart-count"><?php echo esc_html( (string) $count ); ?></b>
 			</a>
 		</div>

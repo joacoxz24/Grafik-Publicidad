@@ -123,9 +123,16 @@ final class Grafik_Chapitas {
 					<progress data-bulk-progress min="0" max="<?php echo esc_attr( $initial['threshold'] - $initial['minimum'] ); ?>" value="0" aria-label="Progreso hacia el precio por mayor"></progress>
 					<small data-bulk-message>Agrega <?php echo esc_html( number_format_i18n( $initial['threshold'] - $initial['minimum'] ) ); ?> unidades para acceder al precio por mayor.</small>
 				</div>
-				<div class="chapita-tiers"><p><span data-regular-range></span><strong data-regular-price></strong></p><p><span data-bulk-range></span><strong data-bulk-price></strong></p></div>
+				<div class="chapita-tiers" role="group" aria-label="Precios por cantidad">
+					<p class="chapita-tier chapita-tier-regular" data-tier="regular"><span class="chapita-tier-label">Por menor</span><span data-regular-range></span><strong><span data-regular-price></span><small>c/u</small></strong></p>
+					<p class="chapita-tier chapita-tier-bulk" data-tier="bulk"><span class="chapita-tier-label">Por mayor</span><span data-bulk-range></span><strong><span data-bulk-price></span><small>c/u</small></strong></p>
+				</div>
 				<label class="option">Detalles de tus chapitas<textarea name="design_details" rows="4" maxlength="500" placeholder="Texto, colores, logo y detalles de tu diseño…"></textarea></label>
-				<label class="option">Logo o diseño de referencia<input name="grafik_files[]" type="file" accept=".png,.jpg,.jpeg,.pdf" multiple><small>PNG, JPG o PDF · máximo 3 archivos · 10 MB por archivo. El diámetro terminado es de 58 mm; revisaremos el diseño contigo.</small></label>
+				<label class="option grafik-upload-field"><span>Tu logo o diseño</span><span class="grafik-upload-zone">
+					<input name="grafik_files[]" type="file" accept=".png,.jpg,.jpeg,.pdf" multiple>
+					<svg class="grafik-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 16V3m-4 4 4-4 4 4M4 15v6h16v-6"/></svg>
+					<strong data-upload-label>Selecciona tus archivos</strong><small>PNG, JPG o PDF · máximo 3 archivos · 10 MB por archivo</small>
+				</span><small class="grafik-upload-feedback" data-upload-feedback role="status" hidden></small><small>El diámetro terminado es de 58 mm; revisaremos el diseño contigo.</small></label>
 				<div class="price-card" aria-live="polite"><div><span>Precio por unidad</span><strong data-unit-price></strong></div><p class="chapita-saving" data-bulk-saving hidden></p><div class="total"><span>Total</span><strong data-total></strong></div></div>
 				<button class="cta full" type="submit">Agregar al carrito <b aria-hidden="true">→</b></button><p class="chapita-message" role="status"></p>
 				<noscript>Activa JavaScript para cotizar y personalizar tus chapitas.</noscript>
