@@ -159,3 +159,11 @@ Validación local: plantillas PHP reales a 320, 390, 750, 989 y 1440 px; selecto
 
 Tema 1.9.1 y configurador 1.3.8. Por solicitud del propietario, ambas tarjetas muestran «OFERTA» en rojo, precio anterior tachado calculado como precio actual + $100 y «Ahorras $100 por unidad». Los valores de referencia cambian con el modelo elegido. Son referencias promocionales indicadas por el propietario, no un historial de precios verificado. No se alteran precios de WooCommerce, totales, umbrales ni el ahorro por volumen, que continúa calculándose por separado. Sin plazos promocionales ni escasez inventados. Prueba de los tres modelos y sus seis referencias, totales y diseño en cinco anchos; entrega manual por ZIP y GitHub.
 
+## Fotos, comprobantes y seguimiento — 11 de noviembre de 2026
+
+Configurador 1.4.0; tema sin cambios (1.9.1). Se revisaron y ampliaron `grafik_order_ready`, `customer_completed_order` nativo y `grafik_order_shipped`, sin duplicar correos/estados. Metabox en ambos editores de pedidos, upload AJAX privado JPG/PNG/PDF (20 por pedido, 10 MB c/u), casillas por aviso, quitar archivo, transportista/número/enlace/fecha opcionales. WooCommerce CRUD para metadata HPOS; subidas y guardado independientes de estado/correos. Envíos automáticos con marcas de éxito/bloqueo por pedido y aviso; acciones explícitas de reenvío. El bloque de seguimiento se oculta en retiro presencial y si está vacío. Imágenes adaptables y enlaces a PDF, sin adjuntos.
+
+Almacenamiento fuera del directorio público y endpoint firmado por archivo/pedido para cliente (90 días), con revocación al quitar el archivo. Inicialización desde el editor de pedidos; si no hay permisos de escritura el hosting debe configurar `GRAFIK_ORDER_MEDIA_DIR`. Esta carpeta privada y la BD requieren respaldo separado del código. Guía: `docs/FOTOS-COMPROBANTES-PEDIDOS.md`.
+
+Pruebas locales: 69 verificaciones funcionales/seguridad, 16 de integración con la clase/registro de correos existentes, HTTP multipart/descargas reales/panel 390 y 1000 px y suite PHP anterior completa. Sin conexión al hosting ni envío real de correos. No se modificaron Flow, precios, checkout ni estados de pago. Se entrega solo ZIP del plugin para instalación manual.
+

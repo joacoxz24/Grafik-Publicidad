@@ -1,0 +1,13 @@
+.grafik-order-updates{--grafik-accent:#007e91;max-width:1100px}
+.grafik-update-file{display:flex;align-items:flex-start;gap:16px;margin:14px 0;padding:16px;border:1px solid #d6e0e8;border-radius:10px;background:#f7fafc}
+.grafik-update-file>img{width:100px;max-height:110px;object-fit:contain;border-radius:6px}
+.grafik-update-file>div{min-width:0;overflow-wrap:anywhere}
+.grafik-update-choices{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+.grafik-update-choices label{display:inline-flex;gap:4px;align-items:center}
+.grafik-update-upload{display:block;border:2px dashed var(--grafik-accent);padding:20px;border-radius:12px;margin:20px 0;font-weight:600}
+.grafik-update-upload input{display:block;margin-top:10px;max-width:100%}
+.grafik-tracking-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}
+.grafik-tracking-fields label{display:grid;gap:6px}
+.grafik-tracking-fields input,.grafik-tracking-fields select{width:100%;max-width:none}
+.grafik-order-updates [data-media-status]{font-weight:600;color:#005a68;overflow-wrap:anywhere}
+@media(max-width:600px){.grafik-update-file{flex-direction:column}.grafik-update-choices{flex-direction:column}}

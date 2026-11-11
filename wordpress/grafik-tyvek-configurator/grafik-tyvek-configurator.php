@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador de Productos
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Pulseras Tyvek y chapitas publicitarias de 58 mm para WooCommerce, con archivos por diseño, descuentos y datos de despacho.
- * Version:           1.3.8
+ * Version:           1.4.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.3.8' );
+define( 'GRAFIK_TYVEK_VERSION', '1.4.0' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
@@ -67,6 +67,8 @@ final class Grafik_Tyvek_Configurator {
 	private function __construct() {
 		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-order-files.php';
 		Grafik_Order_Files::boot();
+		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-order-updates.php';
+		Grafik_Order_Updates::boot();
 		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-flow-lifecycle.php';
 		require_once GRAFIK_TYVEK_DIR . 'includes/class-grafik-mail-transport.php';
 		add_action( 'init', array( $this, 'register_order_statuses' ), 10 );
@@ -233,6 +235,7 @@ final class Grafik_Tyvek_Configurator {
 	}
 
 	public function send_status_email( int $order_id, string $from, string $to, WC_Order $order ): void {
+		if ( $from === $to ) { return; }
 		$email_ids = array(
 			'grafik-confirmado' => 'grafik_order_confirmed',
 			'grafik-listo'      => 'grafik_order_ready',

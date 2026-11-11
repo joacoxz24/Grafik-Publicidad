@@ -1,4 +1,4 @@
-# Grafik Configurador de Productos 1.2
+# Grafik Configurador de Productos 1.4.0
 
 Plugin complementario para WooCommerce. No contiene ni reemplaza la pasarela
 de Flow.
@@ -35,3 +35,14 @@ mostrado por JavaScript y no contiene credenciales de Flow.
 
 Se conserva la carpeta del plugin para actualizar la instalación existente.
 Shortcodes: `[grafik_tyvek_configurator]` y `[grafik_chapitas_configurator]`.
+
+## Fotos y comprobantes del comercio
+
+Cada pedido dispone de «Fotos, comprobantes y seguimiento» para subir JPG/PNG/PDF
+privados, elegir en qué avisos aparecen y guardar seguimiento opcional. Se amplían
+los correos existentes Listo, Completado y Enviado. Guardar no cambia estados ni
+envía correo. Las acciones de reenvío están en Acciones del pedido.
+
+Se usa una carpeta fuera del directorio público y enlaces firmados de 90 días
+para el cliente. Incluir esa carpeta privada al respaldar/migrar. La guía completa
+del repositorio es `docs/FOTOS-COMPROBANTES-PEDIDOS.md`.
