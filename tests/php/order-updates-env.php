@@ -70,7 +70,7 @@ if (defined('GRAFIK_TEST_REAL_PLUGIN')) {
  function plugin_dir_url($s){return '/plugin/';}
  require __DIR__.'/../../wordpress/grafik-tyvek-configurator/grafik-tyvek-configurator.php';
 } else {
- class Grafik_Tyvek_Configurator {const DELIVERY_LABELS=['pickup'=>'Retiro coordinado CONCEPCIÓN','pickup_linares'=>'Retiro LINARES','transport'=>'Envío por transporte'];}
+ class Grafik_Tyvek_Configurator {const DELIVERY_LABELS=['pickup'=>'Retiro CONCEPCIÓN','pickup_linares'=>'Retiro LINARES','transport'=>'Envío por transporte'];}
 }
 require GRAFIK_TYVEK_DIR.'includes/class-grafik-order-updates.php';
 Grafik_Order_Updates::boot();

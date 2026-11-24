@@ -3,7 +3,7 @@
  * Plugin Name:       Grafik Configurador de Productos
  * Plugin URI:        https://odcpublicidad.cl
  * Description:       Pulseras Tyvek y chapitas publicitarias de 58 mm para WooCommerce, con archivos por diseño, descuentos y datos de despacho.
- * Version:           1.4.0
+ * Version:           1.4.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  woocommerce
@@ -13,14 +13,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GRAFIK_TYVEK_VERSION', '1.4.0' );
+define( 'GRAFIK_TYVEK_VERSION', '1.4.1' );
 define( 'GRAFIK_TYVEK_FILE', __FILE__ );
 define( 'GRAFIK_TYVEK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GRAFIK_TYVEK_URL', plugin_dir_url( __FILE__ ) );
 
 final class Grafik_Tyvek_Configurator {
 	public const DELIVERY_LABELS = array(
-		'pickup'         => 'Retiro coordinado CONCEPCIÓN',
+		'pickup'         => 'Retiro CONCEPCIÓN',
 		'pickup_linares' => 'Retiro LINARES',
 		'transport'      => 'Envío por transporte',
 	);
@@ -804,7 +804,7 @@ final class Grafik_Tyvek_Configurator {
 			<div class="grafik-delivery-choice">
 				<label class="grafik-delivery-option">
 					<input type="radio" name="grafik_delivery_method" value="pickup" checked>
-					<strong>Retiro coordinado CONCEPCIÓN</strong>
+					<strong><?php echo esc_html( self::DELIVERY_LABELS['pickup'] ); ?></strong>
 					<small>Coordinaremos contigo el lugar y horario.</small>
 				</label>
 				<label class="grafik-delivery-option">

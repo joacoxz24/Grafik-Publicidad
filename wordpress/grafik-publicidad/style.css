@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://grafikpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.9.1
+Version: 1.9.2
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -172,6 +172,11 @@ body.admin-bar .header{top:32px}
 .woocommerce-checkout #payment div.payment_box::before{border-bottom-color:#111b2e}
 .woocommerce-checkout #payment div.form-row{padding:20px}
 .woocommerce-checkout #place_order{width:100%;min-height:58px;font-size:17px}
+.woocommerce-checkout button#place_order::before{content:"";position:static;display:inline-block;width:1.15em;height:1.15em;margin-right:.45em;vertical-align:-.2em;background:currentColor;mask:url('assets/images/payment-shield.svg') center/contain no-repeat;-webkit-mask:url('assets/images/payment-shield.svg') center/contain no-repeat}
+.grafik-checkout-quote{clear:both;padding-top:18px;text-align:center}
+.grafik-checkout-quote p{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.5}
+.grafik-checkout-quote a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border:1px solid #58c998;border-radius:10px;background:#10271f;color:#a2f4cd;font-weight:700;text-decoration:none}
+.grafik-checkout-quote a:hover,.grafik-checkout-quote a:focus-visible{background:#184433;color:#fff}
 .woocommerce-checkout .woocommerce-privacy-policy-text{color:var(--sub);font-size:11px;line-height:1.6}
 .woocommerce-checkout .grafik-delivery-fields{margin-top:24px;padding:26px;border:1px solid var(--border);border-radius:18px;background:#0a111e}
 .woocommerce-checkout .grafik-delivery-fields h3{margin:0 0 18px;font-size:21px}

@@ -37,7 +37,7 @@ foreach(['','unknown',['starken']] as $invalid) {
 $_POST=['grafik_delivery_method'=>'pickup','grafik_shipping_carrier'=>'starken']; $GLOBALS['notices']=[];
 $order=new WC_Order; $order->update_meta_data('_grafik_shipping_carrier','bluexpress');
 $plugin->validate_delivery_fields(); check(!$GLOBALS['notices']); $plugin->save_delivery_fields($order); check($order->get_meta('_grafik_shipping_carrier')==='');
-$email=$plugin->email_delivery_fields([],false,$order); check(!isset($email['grafik_shipping_carrier'])); check($email['grafik_delivery_method']['value']==='Retiro coordinado CONCEPCIÓN');
+$email=$plugin->email_delivery_fields([],false,$order); check(!isset($email['grafik_shipping_carrier'])); check($email['grafik_delivery_method']['value']==='Retiro CONCEPCIÓN');
 $_POST=['grafik_delivery_method'=>'pickup_linares']; $GLOBALS['notices']=[];
 $order=new WC_Order; $order->update_meta_data('_grafik_shipping_carrier','bluexpress');
 $plugin->validate_delivery_fields(); check(!$GLOBALS['notices']); $plugin->save_delivery_fields($order);
