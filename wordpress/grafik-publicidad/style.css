@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://grafikpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.9.2
+Version: 1.9.3
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -295,7 +295,7 @@ body.admin-bar .header{top:32px}
 @media(prefers-reduced-motion:reduce){.is-enhanced .grafik-photo-slide,.grafik-photo-thumbnails button{transition:none}}
 
 /* Commercial information beside the chapitas configurator. */
-.grafik-chapitas-benefits{margin:0 0 28px;padding:18px 22px;border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--muted);line-height:1.65}.grafik-chapitas-benefits p{margin:0}.grafik-chapitas-benefits p+p{margin-top:8px}.grafik-chapitas-benefits strong{color:var(--white)}.grafik-chapitas-benefits a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
+.grafik-chapitas-benefits{margin:28px 0 0;padding:18px 22px;border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--muted);line-height:1.65}.grafik-chapitas-benefits p{margin:0}.grafik-chapitas-benefits p+p{margin-top:8px}.grafik-chapitas-benefits strong{color:var(--white)}.grafik-chapitas-benefits a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
 
 .grafik-catalog-guide{max-width:none}.grafik-catalog-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 36px}.grafik-catalog-guide-grid h3{margin-top:16px}
 @media(max-width:700px){.grafik-catalog-guide-grid{grid-template-columns:1fr}}
