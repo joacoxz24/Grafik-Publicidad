@@ -18,10 +18,15 @@ const file=(name='logo.png',buffer=png)=>({name,mimeType:'image/png',buffer});
   const page=await browser.newPage();
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   const chapitas=render('chapitas');
-  for(const width of [320,390,750,989,1440]){
+  for(const width of [320,390,750,764,989,1440]){
    await page.setViewportSize({width,height:950});
    await page.setContent(chapitas);
    await page.addScriptTag({content:read('wordpress/grafik-tyvek-configurator/assets/js/chapitas.js')});
+   await page.addScriptTag({content:read('wordpress/grafik-publicidad/assets/js/theme.js')});
+   const quote=page.locator('button[type="submit"] + a.grafik-chapitas-quote');
+   assert(await quote.isVisible(),'WhatsApp link after purchase button at '+width);
+   assert.equal(await quote.locator('svg').count(),1);
+   assert.equal(await page.locator('[data-tier="regular"]').evaluate(el=>getComputedStyle(el).rowGap),'5px');
    const cart=page.getByRole('link',{name:'Ver carrito',exact:true});
    assert(await cart.isVisible(),'Cart hidden at '+width);
    assert.equal(Math.round((await cart.boundingBox()).width),52);
@@ -30,6 +35,9 @@ const file=(name='logo.png',buffer=png)=>({name,mimeType:'image/png',buffer});
    for(const card of await page.locator('.chapita-tier').all()) assert(await card.evaluate(el=>el.scrollWidth<=el.clientWidth),'Price card overflow at '+width);
    assert.equal(await page.locator('[data-tier="regular"]').getAttribute('data-active'),'true');
    await page.locator('input[name="quantity"]').fill('101');
+   const quoteUrl=new URL(await quote.getAttribute('href'));
+   assert.equal(quoteUrl.origin+quoteUrl.pathname,'https://wa.me/56985074469');
+   assert.match(quoteUrl.searchParams.get('text'),/Chapita alfiler de 58 mm \(101 unidades\)/);
    assert.equal(await page.locator('[data-tier="bulk"]').getAttribute('data-active'),'true');
    assert.equal(await page.locator('[data-tier="regular"]').getAttribute('data-active'),'false');
    assert.equal(Number((await page.locator('[data-total]').textContent()).replace(/\D/g,'')),40400);

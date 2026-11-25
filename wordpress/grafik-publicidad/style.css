@@ -3,7 +3,7 @@ Theme Name: Grafik Publicidad
 Theme URI: https://grafikpublicidad.cl
 Author: Grafik Publicidad
 Description: Tema WooCommerce para pulseras Tyvek y chapitas publicitarias.
-Version: 1.9.3
+Version: 1.9.4
 Requires at least: 6.5
 Requires PHP: 8.1
 Text Domain: grafik-publicidad
@@ -302,7 +302,15 @@ body.admin-bar .header{top:32px}
 
 /* Two price cards, adapting to the available form width rather than the viewport. */
 #chapitas .chapita-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:12px}
-#chapitas .chapita-tiers .chapita-tier{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:10px;min-width:0;margin:0;padding:18px 16px;border:1px solid #ffffff20;border-radius:14px;background:#080f1d;transition:border-color .2s,background .2s}
+#chapitas .chapita-tiers .chapita-tier{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:5px 10px;min-width:0;margin:0;padding:18px 16px;border:1px solid #ffffff20;border-radius:14px;background:#080f1d;transition:border-color .2s,background .2s}
+#chapitas .grafik-chapitas-form .option:has(>select[name="kind"]){margin-bottom:-5px}
+#chapitas .grafik-chapitas-form :is(.chapita-stock,.chapita-minimum){margin-bottom:-22px}
+#chapitas .grafik-chapitas-form .option:has(>textarea[name="design_details"]){margin-bottom:-2px}
+#chapitas .grafik-chapitas-form .grafik-upload-field{margin-bottom:5px}
+#chapitas .grafik-upload-field>small:last-child{margin-bottom:-20px}
+#chapitas .grafik-chapitas-quote{display:flex;align-items:center;justify-content:center;gap:9px;padding:12px;min-height:48px;border:1px solid #25d366;border-radius:14px;background:#050505;color:white;text-decoration:none;text-align:center;font-weight:700;line-height:1.35}
+#chapitas .grafik-chapitas-quote svg{color:#25d366;flex-shrink:0}
+#chapitas .grafik-chapitas-quote:hover,#chapitas .grafik-chapitas-quote:focus-visible{background:#0c2013;outline:2px solid #25d366;outline-offset:2px}
 #chapitas .chapita-tiers .chapita-tier-label{font-size:11px;line-height:1.4;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#aab7ca}
 #chapitas .chapita-tiers [data-regular-range],#chapitas .chapita-tiers [data-bulk-range]{font-size:14px;line-height:1.5;font-weight:500;color:var(--muted)}
 #chapitas .chapita-tiers .chapita-tier strong{display:flex;align-items:baseline;gap:6px;margin-top:auto;font-size:26px;font-weight:800;line-height:1.25;color:var(--cyan);white-space:nowrap}

@@ -2,6 +2,8 @@
 /** Share a quote from the current WooCommerce payment fragment. */
 defined( 'ABSPATH' ) || exit;
 
+const GRAFIK_WHATSAPP_URL = 'https://wa.me/56985074469';
+
 function grafik_checkout_whatsapp_quote(): void {
 	$cart = WC()->cart;
 	if ( ! $cart || $cart->is_empty() ) {
@@ -26,7 +28,7 @@ function grafik_checkout_whatsapp_quote(): void {
 	$total = html_entity_decode( wp_strip_all_tags( $cart->get_total() ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 	$lines[] = '';
 	$lines[] = 'Total del carrito: ' . $total;
-	$url = 'https://wa.me/56985074469?text=' . rawurlencode( implode( "\n", $lines ) );
+	$url = GRAFIK_WHATSAPP_URL . '?text=' . rawurlencode( implode( "\n", $lines ) );
 	?>
 	<div class="grafik-checkout-quote">
 		<p>¿Necesitas confirmar cantidad o factura antes de pagar?</p>

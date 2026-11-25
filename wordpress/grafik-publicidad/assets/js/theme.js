@@ -1,5 +1,22 @@
 (function () {
   'use strict';
+  const quoteTemplate = document.getElementById('grafik-chapitas-quote');
+  const chapitasForm = document.querySelector('#chapitas .grafik-chapitas-form');
+  if (quoteTemplate && chapitasForm) {
+    const quote = quoteTemplate.content.querySelector('a').cloneNode(true);
+    const destination = quote.href;
+    const {kind, quantity} = chapitasForm.elements;
+    function updateQuote() {
+      const model = kind.selectedOptions[0].textContent.trim();
+      const units = quantity.validity.valid ? ' (' + quantity.value + ' unidades)' : '';
+      quote.href = destination + '?text=' + encodeURIComponent('Hola, Grafik Publicidad. Quisiera cotizar ' + model + ' de 58 mm' + units + '.');
+    }
+    chapitasForm.querySelector('button[type="submit"]').after(quote);
+    quantity.addEventListener('input', updateQuote);
+    kind.addEventListener('change', () => queueMicrotask(updateQuote));
+    quote.addEventListener('click', updateQuote);
+    updateQuote();
+  }
   document.querySelectorAll('[data-photo-gallery]').forEach(function (root) {
     var slides = Array.from(root.querySelectorAll('.grafik-photo-slide'));
     var controls = root.querySelector('.grafik-photo-controls');
